@@ -8,9 +8,5 @@
     <ItemGroup>
         <PackageReference Include="Rocket.Surgery.Conventions" Version="$(RSG_Conventions_Version)" />
         <PackageReference Include="Rocket.Surgery.Builders" Version="$(RSG_Conventions_Version)" />
-        <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="$(RSG_DependencyInjection_Version)" PrivateAssets="All" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3' or '$(TargetFramework)'=='net451'">
-        <PackageReference Include="System.ValueTuple" Version="4.3.0" />
     </ItemGroup>
 </Project>
