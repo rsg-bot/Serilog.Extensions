@@ -5,35 +5,31 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
+using Rocket.Surgery.Extensions.Testing;
 using Rocket.Surgery.Hosting;
 using Serilog;
 using Serilog.Core;
 using Xunit;
+using Xunit.Abstractions;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Rocket.Surgery.Extensions.Serilog.Tests
 {
-    public class SerilogBuilderTests
+    public class SerilogBuilderTests : AutoTestBase
     {
+        public SerilogBuilderTests(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+        }
+
         [Fact]
         public void Constructs()
         {
-            var assemblyProvider = new TestAssemblyProvider();
-            var assemblyCandidateFinder = A.Fake<IAssemblyCandidateFinder>();
-            var scanner = A.Fake<IConventionScanner>();
-            var configuration = A.Fake<IConfiguration>();
-            var builder = new SerilogBuilder(
-                scanner,
-                assemblyProvider,
-                assemblyCandidateFinder,
-                A.Fake<IHostingEnvironment>(),
-                configuration,
-                new LoggingLevelSwitch(),
-                new LoggerConfiguration());
+            var assemblyProvider = AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
+            var builder = AutoFake.Resolve<SerilogBuilder>();
 
             builder.AssemblyProvider.Should().BeSameAs(assemblyProvider);
             builder.AssemblyCandidateFinder.Should().NotBeNull();
-            builder.Configuration.Should().BeSameAs(configuration);
+            builder.Configuration.Should().NotBeNull();
             builder.Environment.Should().NotBeNull();
             builder.Logger.Should().NotBeNull();
             builder.Switch.Should().NotBeNull();
@@ -46,18 +42,8 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
         [Fact]
         public void BuildsLogger()
         {
-            var assemblyProvider = new TestAssemblyProvider();
-            var assemblyCandidateFinder = A.Fake<IAssemblyCandidateFinder>();
-            var scanner = A.Fake<IConventionScanner>();
-            var configuration = A.Fake<IConfiguration>();
-            var builder = new SerilogBuilder(
-                scanner,
-                assemblyProvider,
-                assemblyCandidateFinder,
-                A.Fake<IHostingEnvironment>(),
-                configuration,
-                new LoggingLevelSwitch(),
-                new LoggerConfiguration());
+            AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
+            var builder = AutoFake.Resolve<SerilogBuilder>();
 
             var seriLogger = builder.Build(A.Fake<ILogger>());
             seriLogger.Should().NotBeNull();
