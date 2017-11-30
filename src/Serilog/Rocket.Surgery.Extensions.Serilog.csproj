@@ -3,7 +3,6 @@
         <TargetFrameworks>netstandard1.3;net451;netstandard2.0;net461</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Logging.Abstractions\Rocket.Surgery.Extensions.Logging.Abstractions.csproj" />
         <ProjectReference Include="..\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj" />
     </ItemGroup>
     <ItemGroup>
