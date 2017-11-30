@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Rocket.Surgery.Builders;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
+using Rocket.Surgery.Extensions.Logging;
 using Rocket.Surgery.Hosting;
 using Serilog;
 using Serilog.Core;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
-    public class SerilogBuilder : Builder, ISerilogBuilder, ISerilogConventionContext
+    public class SerilogBuilder : Builder, ISerilogBuilder, ILoggingConventionContext
     {
         private readonly IConventionScanner _scanner;
 
@@ -19,6 +21,7 @@ namespace Rocket.Surgery.Extensions.Serilog
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
+            IServiceCollection services,
             IHostingEnvironment environment,
             IConfiguration configuration,
             LoggingLevelSwitch @switch,
@@ -27,6 +30,7 @@ namespace Rocket.Surgery.Extensions.Serilog
             _scanner = scanner;
             AssemblyProvider = assemblyProvider;
             AssemblyCandidateFinder = assemblyCandidateFinder;
+            Services = services;
             Environment = environment;
             Configuration = configuration;
             Switch = @switch;
@@ -39,6 +43,7 @@ namespace Rocket.Surgery.Extensions.Serilog
         public IConfiguration Configuration { get; }
         public LoggingLevelSwitch Switch { get; }
         public LoggerConfiguration Logger { get; }
+        public IServiceCollection Services { get; }
 
         public ISerilogBuilder AddDelegate(SerilogConventionDelegate @delegate)
         {

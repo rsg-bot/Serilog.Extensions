@@ -12,18 +12,8 @@ namespace Rocket.Surgery.Extensions.Logging
     /// Interface ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
-    public interface ILoggingBuilder : IBuilder
-#if NET461 || NETSTANDARD2_0
-        , Microsoft.Extensions.Logging.ILoggingBuilder
-#endif
+    public interface ILoggingBuilder : IBuilder, ILoggingConventionContext
     {
-        IAssemblyProvider AssemblyProvider { get; }
-        IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
-#if NET451 || NETSTANDARD1_3
-        IServiceCollection Services { get; }
-#endif
-        IHostingEnvironment Environment { get; }
-        IConfiguration Configuration { get; }
         ILoggingBuilder AddDelegate(LoggingConventionDelegate @delegate);
         ILoggingBuilder AddConvention(ILoggingConvention convention);
     }

@@ -11,14 +11,8 @@ namespace Rocket.Surgery.Extensions.Serilog
     /// Interface ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
-    public interface ISerilogBuilder : IBuilder
+    public interface ISerilogBuilder : IBuilder, ISerilogConventionContext
     {
-        IAssemblyProvider AssemblyProvider { get; }
-        IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
-        IHostingEnvironment Environment { get; }
-        IConfiguration Configuration { get; }
-        LoggingLevelSwitch Switch { get; }
-        LoggerConfiguration Logger { get; }
         ISerilogBuilder AddDelegate(SerilogConventionDelegate @delegate);
         ISerilogBuilder AddConvention(ISerilogConvention convention);
     }
