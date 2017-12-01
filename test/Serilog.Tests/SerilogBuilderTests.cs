@@ -31,7 +31,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
             builder.AssemblyCandidateFinder.Should().NotBeNull();
             builder.Configuration.Should().NotBeNull();
             builder.Environment.Should().NotBeNull();
-            builder.Logger.Should().NotBeNull();
+            builder.LoggerConfiguration.Should().NotBeNull();
             builder.Switch.Should().NotBeNull();
             Action a = () => { builder.AddConvention(A.Fake<ISerilogConvention>()); };
             a.Should().NotThrow();
@@ -45,7 +45,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
             AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
             var builder = AutoFake.Resolve<SerilogBuilder>();
 
-            var seriLogger = builder.Build(A.Fake<ILogger>());
+            var seriLogger = builder.Build();
             seriLogger.Should().NotBeNull();
         }
     }

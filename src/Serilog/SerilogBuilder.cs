@@ -8,6 +8,7 @@ using Rocket.Surgery.Conventions.Scanners;
 using Rocket.Surgery.Hosting;
 using Serilog;
 using Serilog.Core;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
@@ -21,24 +22,27 @@ namespace Rocket.Surgery.Extensions.Serilog
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IHostingEnvironment environment,
             IConfiguration configuration,
+            ILogger logger,
             LoggingLevelSwitch @switch,
-            LoggerConfiguration logger)
+            LoggerConfiguration loggerConfiguration)
         {
             _scanner = scanner;
             AssemblyProvider = assemblyProvider;
             AssemblyCandidateFinder = assemblyCandidateFinder;
             Environment = environment;
             Configuration = configuration;
-            Switch = @switch;
             Logger = logger;
+            Switch = @switch;
+            LoggerConfiguration = loggerConfiguration;
         }
 
         public IAssemblyProvider AssemblyProvider { get; }
         public IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
         public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
+        public ILogger Logger { get; }
         public LoggingLevelSwitch Switch { get; }
-        public LoggerConfiguration Logger { get; }
+        public LoggerConfiguration LoggerConfiguration { get; }
 
         public ISerilogBuilder AddDelegate(SerilogConventionDelegate @delegate)
         {
@@ -52,12 +56,12 @@ namespace Rocket.Surgery.Extensions.Serilog
             return this;
         }
 
-        public ILogger Build(Microsoft.Extensions.Logging.ILogger logger)
+        public global::Serilog.ILogger Build()
         {
-            new ConventionComposer(_scanner, logger)
+            new ConventionComposer(_scanner)
                     .Register(this, typeof(ISerilogConventionContext), typeof(SerilogConventionDelegate));
 
-            return Logger.CreateLogger();
+            return LoggerConfiguration.CreateLogger();
         }
     }
 }

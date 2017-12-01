@@ -15,7 +15,7 @@ namespace Rocket.Surgery.Extensions.Logging
     /// <summary>
     /// Logging Builder
     /// </summary>
-    public class LoggingBuilder : Builder, ILoggingBuilder, ILoggingConventionContext
+    public class LoggingBuilder : Builder, ILoggingBuilder
     {
         private readonly IConventionScanner _scanner;
 
@@ -25,14 +25,16 @@ namespace Rocket.Surgery.Extensions.Logging
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IServiceCollection services,
             IHostingEnvironment envionment,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ILogger logger)
         {
-            AssemblyProvider = assemblyProvider;
-            AssemblyCandidateFinder = assemblyCandidateFinder;
-            _scanner = scanner;
-            Services = services;
-            Environment = envionment;
-            Configuration = configuration;
+            AssemblyProvider = assemblyProvider ?? throw new ArgumentNullException(nameof(assemblyProvider));
+            AssemblyCandidateFinder = assemblyCandidateFinder ?? throw new ArgumentNullException(nameof(assemblyCandidateFinder));
+            _scanner = scanner ?? throw new ArgumentNullException(nameof(scanner));
+            Services = services ?? throw new ArgumentNullException(nameof(services));
+            Environment = envionment ?? throw new ArgumentNullException(nameof(envionment));
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public IAssemblyProvider AssemblyProvider { get; }
@@ -40,6 +42,7 @@ namespace Rocket.Surgery.Extensions.Logging
         public IServiceCollection Services { get; }
         public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
+        public ILogger Logger { get; }
 
         public ILoggingBuilder AddDelegate(LoggingConventionDelegate @delegate)
         {
@@ -53,9 +56,9 @@ namespace Rocket.Surgery.Extensions.Logging
             return this;
         }
 
-        public void Build(ILogger logger)
+        public void Build()
         {
-            new ConventionComposer(_scanner, logger).Register(
+            new ConventionComposer(_scanner).Register(
                 this,
                 typeof(ILoggingConventionContext),
                 typeof(LoggingConventionDelegate)

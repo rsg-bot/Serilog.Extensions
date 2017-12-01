@@ -14,7 +14,7 @@ namespace Rocket.Surgery.Extensions.Serilog
         IHostingEnvironment Environment { get; }
         IConfiguration Configuration { get; }
         LoggingLevelSwitch Switch { get; }
-        LoggerConfiguration Logger { get; }
+        LoggerConfiguration LoggerConfiguration { get; }
     }
 }
 

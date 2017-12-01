@@ -42,7 +42,7 @@ namespace Rocket.Surgery.Extensions.Logging.Tests
             AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
             var builder = AutoFake.Resolve<LoggingBuilder>();
 
-            Action a = () => builder.Build(A.Fake<ILogger>());
+            Action a = () => builder.Build();
             a.Should().NotThrow();
         }
     }
