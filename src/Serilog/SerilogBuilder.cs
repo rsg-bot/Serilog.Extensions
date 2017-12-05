@@ -59,7 +59,7 @@ namespace Rocket.Surgery.Extensions.Serilog
         public global::Serilog.ILogger Build()
         {
             new ConventionComposer(_scanner)
-                    .Register(this, typeof(ISerilogConventionContext), typeof(SerilogConventionDelegate));
+                    .Register(this, typeof(ISerilogConvention), typeof(SerilogConventionDelegate));
 
             return LoggerConfiguration.CreateLogger();
         }

@@ -60,7 +60,7 @@ namespace Rocket.Surgery.Extensions.Logging
         {
             new ConventionComposer(_scanner).Register(
                 this,
-                typeof(ILoggingConventionContext),
+                typeof(ILoggingConvention),
                 typeof(LoggingConventionDelegate)
             );
         }
