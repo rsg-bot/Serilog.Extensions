@@ -30,9 +30,9 @@ namespace Rocket.Surgery.Extensions.Logging.Tests
             builder.Services.Should().NotBeNull();
             builder.Configuration.Should().NotBeNull();
             builder.Environment.Should().NotBeNull();
-            Action a = () => { builder.AddConvention(A.Fake<ILoggingConvention>()); };
+            Action a = () => { builder.PrependConvention(A.Fake<ILoggingConvention>()); };
             a.Should().NotThrow();
-            a = () => { builder.AddDelegate(delegate { }); };
+            a = () => { builder.PrependDelegate(delegate { }); };
             a.Should().NotThrow();
         }
 

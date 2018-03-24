@@ -12,10 +12,8 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
-    public class SerilogBuilder : Builder, ISerilogBuilder
+    public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogBuilder
     {
-        private readonly IConventionScanner _scanner;
-
         public SerilogBuilder(
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
@@ -24,11 +22,8 @@ namespace Rocket.Surgery.Extensions.Serilog
             IConfiguration configuration,
             ILogger logger,
             LoggingLevelSwitch @switch,
-            LoggerConfiguration loggerConfiguration)
+            LoggerConfiguration loggerConfiguration) : base(scanner, assemblyProvider, assemblyCandidateFinder)
         {
-            _scanner = scanner;
-            AssemblyProvider = assemblyProvider;
-            AssemblyCandidateFinder = assemblyCandidateFinder;
             Environment = environment;
             Configuration = configuration;
             Logger = logger;
@@ -36,29 +31,17 @@ namespace Rocket.Surgery.Extensions.Serilog
             LoggerConfiguration = loggerConfiguration;
         }
 
-        public IAssemblyProvider AssemblyProvider { get; }
-        public IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
+        protected override ISerilogBuilder GetBuilder() => this;
+
         public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
         public ILogger Logger { get; }
         public LoggingLevelSwitch Switch { get; }
         public LoggerConfiguration LoggerConfiguration { get; }
 
-        public ISerilogBuilder AddDelegate(SerilogConventionDelegate @delegate)
-        {
-            _scanner.AddDelegate(@delegate);
-            return this;
-        }
-
-        public ISerilogBuilder AddConvention(ISerilogConvention convention)
-        {
-            _scanner.AddConvention(convention);
-            return this;
-        }
-
         public global::Serilog.ILogger Build()
         {
-            new ConventionComposer(_scanner)
+            new ConventionComposer(Scanner)
                     .Register(this, typeof(ISerilogConvention), typeof(SerilogConventionDelegate));
 
             return LoggerConfiguration.CreateLogger();

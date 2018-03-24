@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 #endif
 using Rocket.Surgery.Builders;
+using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Hosting;
 
@@ -12,9 +13,5 @@ namespace Rocket.Surgery.Extensions.Logging
     /// Interface ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
-    public interface ILoggingBuilder : IBuilder, ILoggingConventionContext
-    {
-        ILoggingBuilder AddDelegate(LoggingConventionDelegate @delegate);
-        ILoggingBuilder AddConvention(ILoggingConvention convention);
-    }
+    public interface ILoggingBuilder : IConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>, ILoggingConventionContext    {    }
 }

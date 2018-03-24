@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Rocket.Surgery.Builders;
+using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Hosting;
 using Serilog;
@@ -11,9 +12,5 @@ namespace Rocket.Surgery.Extensions.Serilog
     /// Interface ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
-    public interface ISerilogBuilder : IBuilder, ISerilogConventionContext
-    {
-        ISerilogBuilder AddDelegate(SerilogConventionDelegate @delegate);
-        ISerilogBuilder AddConvention(ISerilogConvention convention);
-    }
+    public interface ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogConventionContext { }
 }

@@ -15,10 +15,8 @@ namespace Rocket.Surgery.Extensions.Logging
     /// <summary>
     /// Logging Builder
     /// </summary>
-    public class LoggingBuilder : Builder, ILoggingBuilder
+    public class LoggingBuilder : ConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>, ILoggingBuilder
     {
-        private readonly IConventionScanner _scanner;
-
         public LoggingBuilder(
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
@@ -26,39 +24,24 @@ namespace Rocket.Surgery.Extensions.Logging
             IServiceCollection services,
             IHostingEnvironment envionment,
             IConfiguration configuration,
-            ILogger logger)
+            ILogger logger) : base(scanner, assemblyProvider, assemblyCandidateFinder)
         {
-            AssemblyProvider = assemblyProvider ?? throw new ArgumentNullException(nameof(assemblyProvider));
-            AssemblyCandidateFinder = assemblyCandidateFinder ?? throw new ArgumentNullException(nameof(assemblyCandidateFinder));
-            _scanner = scanner ?? throw new ArgumentNullException(nameof(scanner));
             Services = services ?? throw new ArgumentNullException(nameof(services));
             Environment = envionment ?? throw new ArgumentNullException(nameof(envionment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public IAssemblyProvider AssemblyProvider { get; }
-        public IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
+        protected override ILoggingBuilder GetBuilder() => this;
+
         public IServiceCollection Services { get; }
         public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
         public ILogger Logger { get; }
 
-        public ILoggingBuilder AddDelegate(LoggingConventionDelegate @delegate)
-        {
-            _scanner.AddDelegate(@delegate);
-            return this;
-        }
-
-        public ILoggingBuilder AddConvention(ILoggingConvention convention)
-        {
-            _scanner.AddConvention(convention);
-            return this;
-        }
-
         public void Build()
         {
-            new ConventionComposer(_scanner).Register(
+            new ConventionComposer(Scanner).Register(
                 this,
                 typeof(ILoggingConvention),
                 typeof(LoggingConventionDelegate)

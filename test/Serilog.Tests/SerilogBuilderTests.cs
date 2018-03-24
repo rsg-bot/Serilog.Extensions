@@ -33,9 +33,9 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
             builder.Environment.Should().NotBeNull();
             builder.LoggerConfiguration.Should().NotBeNull();
             builder.Switch.Should().NotBeNull();
-            Action a = () => { builder.AddConvention(A.Fake<ISerilogConvention>()); };
+            Action a = () => { builder.PrependConvention(A.Fake<ISerilogConvention>()); };
             a.Should().NotThrow();
-            a = () => { builder.AddDelegate(delegate { }); };
+            a = () => { builder.PrependDelegate(delegate { }); };
             a.Should().NotThrow();
         }
 
