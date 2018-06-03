@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Rocket.Surgery.Builders;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
-using Rocket.Surgery.Hosting;
 using Serilog;
 using Serilog.Core;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
