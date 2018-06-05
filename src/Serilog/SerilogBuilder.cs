@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +23,8 @@ namespace Rocket.Surgery.Extensions.Serilog
             IConfiguration configuration,
             ILogger logger,
             LoggingLevelSwitch @switch,
-            LoggerConfiguration loggerConfiguration) : base(scanner, assemblyProvider, assemblyCandidateFinder)
+            LoggerConfiguration loggerConfiguration,
+            IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
             Environment = environment;
             Configuration = configuration;
