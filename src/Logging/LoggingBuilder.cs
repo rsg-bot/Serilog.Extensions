@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,8 @@ namespace Rocket.Surgery.Extensions.Logging
     /// </summary>
     public class LoggingBuilder : ConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>, ILoggingBuilder, ILoggingConventionContext
     {
+        private readonly DiagnosticSource _diagnosticSource;
+
         public LoggingBuilder(
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
@@ -25,13 +28,14 @@ namespace Rocket.Surgery.Extensions.Logging
             IServiceCollection services,
             IHostingEnvironment envionment,
             IConfiguration configuration,
-            ILogger logger,
+            DiagnosticSource diagnosticSource,
             IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));
             Environment = envionment ?? throw new ArgumentNullException(nameof(envionment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _diagnosticSource = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
+            Logger = new DiagnosticLogger(_diagnosticSource);
         }
 
         protected override ILoggingBuilder GetBuilder() => this;

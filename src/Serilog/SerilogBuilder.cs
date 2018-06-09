@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -15,22 +16,24 @@ namespace Rocket.Surgery.Extensions.Serilog
 {
     public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogBuilder, ISerilogConventionContext
     {
+        private readonly DiagnosticSource _diagnosticSource;
         public SerilogBuilder(
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IHostingEnvironment environment,
             IConfiguration configuration,
-            ILogger logger,
+            DiagnosticSource diagnosticSource,
             LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
             IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
-            Environment = environment;
-            Configuration = configuration;
-            Logger = logger;
-            Switch = @switch;
-            LoggerConfiguration = loggerConfiguration;
+            Environment = environment ?? throw new ArgumentNullException(nameof(environment));
+            Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _diagnosticSource = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
+            Logger = new DiagnosticLogger(_diagnosticSource);
+            Switch = @switch ?? throw new ArgumentNullException(nameof(@switch));
+            LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
         }
 
         protected override ISerilogBuilder GetBuilder() => this;
