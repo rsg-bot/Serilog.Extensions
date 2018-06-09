@@ -9,5 +9,5 @@ namespace Rocket.Surgery.Extensions.Logging
     /// Interface ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
-    public interface ILoggingBuilder : IConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>, ILoggingConventionContext    {    }
+    public interface ILoggingBuilder : IConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate> { }
 }

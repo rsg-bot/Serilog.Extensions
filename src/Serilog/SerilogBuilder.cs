@@ -13,7 +13,7 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
-    public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogBuilder
+    public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogBuilder, ISerilogConventionContext
     {
         public SerilogBuilder(
             IConventionScanner scanner,

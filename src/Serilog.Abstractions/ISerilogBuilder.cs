@@ -11,5 +11,5 @@ namespace Rocket.Surgery.Extensions.Serilog
     /// Interface ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
-    public interface ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogConventionContext { }
+    public interface ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate> { }
 }

@@ -16,7 +16,7 @@ namespace Rocket.Surgery.Extensions.Logging
     /// <summary>
     /// Logging Builder
     /// </summary>
-    public class LoggingBuilder : ConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>, ILoggingBuilder
+    public class LoggingBuilder : ConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>, ILoggingBuilder, ILoggingConventionContext
     {
         public LoggingBuilder(
             IConventionScanner scanner,
