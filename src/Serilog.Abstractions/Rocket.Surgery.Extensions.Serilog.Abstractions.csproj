@@ -7,6 +7,6 @@
 	    <PackageReference Include="Rocket.Surgery.Builders.Abstractions" Version="$(RSG_Builders_Version)" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(Microsoft_Extensions_Hosting_Version)" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(Microsoft_Extensions_Configuration_Version)" />
-        <PackageReference Include="SeriLog" Version="$(Serilog_Version)" />
+        <PackageReference Include="Serilog" Version="$(Serilog_Version)" />
     </ItemGroup>
 </Project>
