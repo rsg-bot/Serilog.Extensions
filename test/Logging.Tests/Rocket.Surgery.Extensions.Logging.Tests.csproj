@@ -5,6 +5,4 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Logging\Rocket.Surgery.Extensions.Logging.csproj" />
     </ItemGroup>
-	<ItemGroup>
-	</ItemGroup>
 </Project>
