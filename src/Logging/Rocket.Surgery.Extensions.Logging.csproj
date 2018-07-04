@@ -6,8 +6,8 @@
         <ProjectReference Include="..\Logging.Abstractions\Rocket.Surgery.Extensions.Logging.Abstractions.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Rocket.Surgery.Conventions" />
         <PackageReference Include="Rocket.Surgery.Builders" />
+        <PackageReference Include="Rocket.Surgery.Conventions" />
         <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     </ItemGroup>
 </Project>
