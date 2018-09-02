@@ -26,13 +26,13 @@ namespace Rocket.Surgery.Extensions.Logging
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IServiceCollection services,
-            IHostingEnvironment envionment,
+            IHostingEnvironment environment,
             IConfiguration configuration,
             DiagnosticSource diagnosticSource,
             IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));
-            Environment = envionment ?? throw new ArgumentNullException(nameof(envionment));
+            Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _diagnosticSource = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
             Logger = new DiagnosticLogger(_diagnosticSource);
