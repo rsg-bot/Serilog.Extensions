@@ -3,9 +3,13 @@
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Serilog\Rocket.Surgery.Extensions.Serilog.csproj" />
+      <ProjectReference Include="..\Logging.Abstractions\Rocket.Surgery.Extensions.Logging.Abstractions.csproj" />
+      <ProjectReference Include="..\Serilog\Rocket.Surgery.Extensions.Serilog.csproj" />
+      <ProjectReference Include="..\Logging.Empowered\Rocket.Surgery.Extensions.Logging.Empowered.csproj" />
     </ItemGroup>
     <ItemGroup>
+      <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
       <PackageReference Include="Ben.Demystifier" />
       <PackageReference Include="Serilog.Sinks.Async" />
       <PackageReference Include="Serilog.Sinks.Console" />

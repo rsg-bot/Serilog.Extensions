@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.Options;
+using Serilog;
+using Serilog.Core;
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {

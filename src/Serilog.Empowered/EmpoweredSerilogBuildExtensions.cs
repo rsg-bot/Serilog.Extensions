@@ -1,16 +1,31 @@
-﻿using Rocket.Surgery.Extensions.Serilog.Conventions;
+﻿using Microsoft.Extensions.Logging;
+using Rocket.Surgery.Conventions;
+using Rocket.Surgery.Extensions.Logging;
+using Rocket.Surgery.Extensions.Serilog.Conventions;
+using Serilog;
+using Serilog.Events;
+using Serilog.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Serilog.Empowered
 {
-    public static class EmpoweredSerilogBuildExtensions
+    public static class EmpoweredSerilogExtensions
     {
-        public static ISerilogBuilder UseEmpoweredSerilog(this ISerilogBuilder builder, bool async = true)
+        public static T UseEmpoweredSerilog<T>(
+            this T container,
+            EmpoweredSerilogOptions options)
+            where T : IConventionHostBuilder
         {
-            builder.AppendConvention(new EnvironmentLoggingConvention());
-            builder.AppendConvention(new SerilogConsoleLoggingConvention(async));
-            builder.AppendConvention(new SerilogDebugLoggingConvention(async));
-            builder.AppendConvention(new SerilogEnrichLoggingConvention());
-            return builder;
+            container.UseEmpoweredLogging(new EmpoweredLoggingOptions()
+            {
+                GetLogLevel = options.GetLogLevel
+            });
+            container.AppendConvention(new EnvironmentLoggingConvention());
+            container.AppendConvention(new RequestLoggingConvention());
+            container.AppendConvention(new SerilogConsoleLoggingConvention(options.IsAsync));
+            container.AppendConvention(new SerilogDebugLoggingConvention(options.IsAsync));
+            container.AppendConvention(new SerilogEnrichLoggingConvention());
+            container.AppendConvention(new SerilogServiceConvention(container.Scanner, container.DiagnosticSource, options));
+            return container;
         }
     }
 }

@@ -1,20 +1,21 @@
 ﻿using Serilog;
 using Serilog.Configuration;
+using System;
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     public class SerilogDebugLoggingConvention : ISerilogConvention
     {
-        private readonly bool async;
+        private readonly Func<ISerilogConventionContext, bool> isAsync;
 
-        public SerilogDebugLoggingConvention(bool async)
+        public SerilogDebugLoggingConvention(Func<ISerilogConventionContext, bool> isAsync)
         {
-            this.async = async;
+            this.isAsync = isAsync;
         }
 
         public void Register(ISerilogConventionContext context)
         {
-            if (async)
+            if (isAsync(context))
             {
                 context.LoggerConfiguration.WriteTo.Async(Register);
             }
