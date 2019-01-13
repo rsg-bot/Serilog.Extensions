@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27019.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{1E56F8EA-0A93-4EA5-9EC6-400B24CAC531}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{2D7895
 		build.ps1 = build.ps1
 		cakefile.cake = cakefile.cake
 		Common.Build.props = Common.Build.props
+		Common.Build.targets = Common.Build.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{52F62811-7776-42E4-921F-E1F9202F8074}"
@@ -39,11 +40,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Logging.Tests", "test\Logging.Tests\Rocket.Surgery.Extensions.Logging.Tests.csproj", "{109760C6-15F7-4779-9E64-E59877EA9AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog", "src\Serilog\Rocket.Surgery.Extensions.Serilog.csproj", "{91D719D0-0D41-4BA7-BF27-05033A88B689}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog", "src\Serilog\Rocket.Surgery.Extensions.Serilog.csproj", "{91D719D0-0D41-4BA7-BF27-05033A88B689}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog.Abstractions", "src\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj", "{291E3147-EA92-4E6D-8BAA-52F5DE3B3F65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog.Abstractions", "src\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj", "{291E3147-EA92-4E6D-8BAA-52F5DE3B3F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog.Tests", "test\Serilog.Tests\Rocket.Surgery.Extensions.Serilog.Tests.csproj", "{B60FDD81-49A1-453C-860A-DAFF11BB411A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog.Tests", "test\Serilog.Tests\Rocket.Surgery.Extensions.Serilog.Tests.csproj", "{B60FDD81-49A1-453C-860A-DAFF11BB411A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog.Empowered", "src\Serilog.Empowered\Rocket.Surgery.Extensions.Serilog.Empowered.csproj", "{B4B84B17-6462-41B7-B563-984558CD7690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +130,18 @@ Global
 		{B60FDD81-49A1-453C-860A-DAFF11BB411A}.Release|x64.Build.0 = Release|Any CPU
 		{B60FDD81-49A1-453C-860A-DAFF11BB411A}.Release|x86.ActiveCfg = Release|Any CPU
 		{B60FDD81-49A1-453C-860A-DAFF11BB411A}.Release|x86.Build.0 = Release|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Debug|x64.Build.0 = Debug|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Debug|x86.Build.0 = Debug|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Release|x64.ActiveCfg = Release|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Release|x64.Build.0 = Release|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Release|x86.ActiveCfg = Release|Any CPU
+		{B4B84B17-6462-41B7-B563-984558CD7690}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +153,7 @@ Global
 		{91D719D0-0D41-4BA7-BF27-05033A88B689} = {52F62811-7776-42E4-921F-E1F9202F8074}
 		{291E3147-EA92-4E6D-8BAA-52F5DE3B3F65} = {52F62811-7776-42E4-921F-E1F9202F8074}
 		{B60FDD81-49A1-453C-860A-DAFF11BB411A} = {F2329C11-7A3F-4D18-A665-6FA91A922DBF}
+		{B4B84B17-6462-41B7-B563-984558CD7690} = {52F62811-7776-42E4-921F-E1F9202F8074}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7EF3BE50-98BC-4A67-A514-EF6078B1DA37}
