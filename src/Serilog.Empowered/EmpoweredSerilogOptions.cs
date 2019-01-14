@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using System;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.Logging;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog;
 using Serilog.Events;
@@ -15,10 +14,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Empowered
             EmpoweredSerilogOptions options)
             where T : IConventionHostBuilder
         {
-            container.UseEmpoweredLogging(new EmpoweredLoggingOptions()
-            {
-                GetLogLevel = options.GetLogLevel
-            });
             container.AppendConvention(new EnvironmentLoggingConvention());
             container.AppendConvention(new RequestLoggingConvention());
             container.AppendConvention(new SerilogConsoleLoggingConvention(options.IsAsync));
