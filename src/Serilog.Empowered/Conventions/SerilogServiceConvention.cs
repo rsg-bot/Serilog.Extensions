@@ -43,6 +43,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             var logLevel = _options.GetLogLevel(context);
 
             _options.LoggingLevelSwitch.MinimumLevel = GetLogEventLevel(logLevel);
+            context.Services.AddSingleton(_options.LoggingLevelSwitch);
             context.Services.AddSingleton<ILoggerProvider>(new SerilogLoggerProvider(serilogBuilder.Build(), true));
         }
 

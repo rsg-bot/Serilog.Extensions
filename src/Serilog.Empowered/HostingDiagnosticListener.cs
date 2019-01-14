@@ -11,7 +11,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Empowered
     /// <summary>
     /// <see cref="IDiagnosticListener"/> implementation that listens for events specific to AspNetCore hosting layer.
     /// </summary>
-    internal class HostingDiagnosticListener : IDiagnosticListener
+    internal class HostingDiagnosticListener : ISerilogDiagnosticListener
     {
         private static readonly AsyncLocal<Queue<IDisposable>> HostingDisposable = new AsyncLocal<Queue<IDisposable>>();
 

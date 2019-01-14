@@ -12,20 +12,20 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     {
         public void Register(IServiceConventionContext context)
         {
-            context.Services.AddTransient<IDiagnosticListener, HostingDiagnosticListener>();
+            context.Services.AddTransient<ISerilogDiagnosticListener, HostingDiagnosticListener>();
             context.OnBuild.Subscribe(new ServiceProviderObserver());
         }
 
         class DiagnosticListenerObserver : IObserver<DiagnosticListener>, IDisposable
         {
             private readonly List<IDisposable> _subscriptions;
-            private readonly IEnumerable<IDiagnosticListener> _diagnosticListeners;
+            private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DiagnosticListenerObserver"/> class.
             /// </summary>
             public DiagnosticListenerObserver(
-                IEnumerable<IDiagnosticListener> diagnosticListeners)
+                IEnumerable<ISerilogDiagnosticListener> diagnosticListeners)
             {
                 _diagnosticListeners = diagnosticListeners;
                 _subscriptions = new List<IDisposable>();
@@ -85,7 +85,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             {
                 var disposable = DiagnosticListener.AllListeners.Subscribe(
                     new DiagnosticListenerObserver(
-                        value.GetRequiredService<IEnumerable<IDiagnosticListener>>()));
+                        value.GetRequiredService<IEnumerable<ISerilogDiagnosticListener>>()));
 
                 value.GetRequiredService<IApplicationLifetime>().ApplicationStopped.Register(() => disposable.Dispose());
             }
