@@ -17,8 +17,8 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         private readonly EmpoweredSerilogOptions _options;
 
         public SerilogServiceConvention(
-            IConventionScanner scanner, 
-            DiagnosticSource diagnosticSource, 
+            IConventionScanner scanner,
+            DiagnosticSource diagnosticSource,
             EmpoweredSerilogOptions options)
         {
             this._scanner = scanner;
@@ -40,7 +40,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 context.Properties
             );
 
-            var logLevel = _options.GetLogLevel(context);
+            var logLevel = _options.GetLogLevel(serilogBuilder);
 
             _options.LoggingLevelSwitch.MinimumLevel = GetLogEventLevel(logLevel);
             context.Services.AddSingleton(_options.LoggingLevelSwitch);

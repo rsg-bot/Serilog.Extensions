@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Serilog;
 using Serilog.Core;
@@ -11,6 +12,10 @@ namespace Rocket.Surgery.Extensions.Serilog.Empowered
         public Func<ISerilogConventionContext, bool> IsAsync { get; set; } = (context) => true;
         public LoggingLevelSwitch LoggingLevelSwitch { get; set; } = new LoggingLevelSwitch();
         public LoggerConfiguration LoggerConfiguration { get; set; } = new LoggerConfiguration();
-        public Func<IConventionContext, LogLevel> GetLogLevel { get; set; } = (context) => LogLevel.Information;
+        /// <summary>
+        /// Determines how the loglevel is captured, defautlts to the value that can be set into the configuraiton
+        /// IApplicationState:LogLevel
+        /// </summary>
+        public Func<ISerilogConventionContext, LogLevel> GetLogLevel { get; set; } = context => context.Configuration.GetValue("ApplicationState:LogLevel", LogLevel.Information);
     }
 }
