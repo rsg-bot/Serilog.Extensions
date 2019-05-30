@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rocket.Surgery.Extensions.DependencyInjection;
-using Rocket.Surgery.Extensions.Serilog.Empowered;
+using Rocket.Surgery.Extensions.Serilog.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

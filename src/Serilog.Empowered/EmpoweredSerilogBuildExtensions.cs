@@ -15,7 +15,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Empowered
             where T : IConventionHostBuilder
         {
             container.AppendConvention(new EnvironmentLoggingConvention());
-            container.AppendConvention(new RequestLoggingConvention());
             container.AppendConvention(new SerilogConsoleLoggingConvention(options.IsAsync));
             container.AppendConvention(new SerilogDebugLoggingConvention(options.IsAsync));
             container.AppendConvention(new SerilogEnrichLoggingConvention());

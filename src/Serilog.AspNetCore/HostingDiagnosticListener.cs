@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
-namespace Rocket.Surgery.Extensions.Serilog.Empowered
+namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
 {
     /// <summary>
     /// <see cref="IDiagnosticListener"/> implementation that listens for events specific to AspNetCore hosting layer.

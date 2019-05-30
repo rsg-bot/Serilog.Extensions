@@ -1,4 +1,4 @@
-﻿namespace Rocket.Surgery.Extensions.Serilog.Empowered
+﻿namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
 {
     /// <summary>
     /// Header names for requests / responses.
