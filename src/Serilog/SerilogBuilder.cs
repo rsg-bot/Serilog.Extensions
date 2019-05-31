@@ -21,7 +21,7 @@ namespace Rocket.Surgery.Extensions.Serilog
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
-            IHostingEnvironment environment,
+            IHostEnvironment environment,
             IConfiguration configuration,
             DiagnosticSource diagnosticSource,
             LoggingLevelSwitch @switch,
@@ -38,7 +38,7 @@ namespace Rocket.Surgery.Extensions.Serilog
 
         protected override ISerilogBuilder GetBuilder() => this;
 
-        public IHostingEnvironment Environment { get; }
+        public IHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
         public ILogger Logger { get; }
         public LoggingLevelSwitch Switch { get; }

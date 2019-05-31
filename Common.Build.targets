@@ -1,14 +1,13 @@
 <Project>
   <ItemGroup>
-    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
-    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="2.1.1" />
-    <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.1" />
-    <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0-preview5.19227.9" />
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.0-preview5.19227.9" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-preview5.19227.9" />
     <PackageReference Update="Rocket.Surgery.Builders" Version="4.0.0" />
     <PackageReference Update="Rocket.Surgery.Builders.Abstractions" Version="4.0.0" />
     <PackageReference Update="Rocket.Surgery.Conventions" Version="4.0.0" />
     <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="4.0.0" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="3.0.0" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="4.0.0" />
     <PackageReference Update="Serilog" Version="2.8.0" />
     <PackageReference Update="Serilog.Enrichers.Demystify" Version="0.1.0-dev-*" />
     <PackageReference Update="Serilog.Enrichers.Environment" Version="2.1.3" />

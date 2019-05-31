@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Serilog\Rocket.Surgery.Extensions.Serilog.csproj" />
@@ -8,7 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
-    <PackageReference Condition="'$(TargetFramework)' == 'netstandard2.0'" Include="Microsoft.AspNetCore.Http.Abstractions" />
-    <FrameworkReference Condition="'$(TargetFramework)' == 'netcoreapp3.0'" Include="Microsoft.AspNetCore.App" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 </Project>
