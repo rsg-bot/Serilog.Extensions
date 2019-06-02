@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Rocket.Surgery.Builders;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
@@ -18,27 +17,23 @@ namespace Rocket.Surgery.Extensions.Serilog
     {
         private readonly DiagnosticSource _diagnosticSource;
         public SerilogBuilder(
+            IRocketEnvironment environment,
+            IConfiguration configuration,
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
-            IHostEnvironment environment,
-            IConfiguration configuration,
-            DiagnosticSource diagnosticSource,
             LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
-            IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
+            DiagnosticSource diagnosticSource,
+            IDictionary<object, object> properties) : base(environment, scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
-            Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _diagnosticSource = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
             Logger = new DiagnosticLogger(_diagnosticSource);
             Switch = @switch ?? throw new ArgumentNullException(nameof(@switch));
             LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
         }
-
-        protected override ISerilogBuilder GetBuilder() => this;
-
-        public IHostEnvironment Environment { get; }
+        
         public IConfiguration Configuration { get; }
         public ILogger Logger { get; }
         public LoggingLevelSwitch Switch { get; }

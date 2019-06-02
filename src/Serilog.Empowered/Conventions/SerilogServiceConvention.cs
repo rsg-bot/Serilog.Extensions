@@ -29,14 +29,14 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public void Register(IServiceConventionContext context)
         {
             var serilogBuilder = new SerilogBuilder(
+                context.Environment,
+                context.Configuration,
                 _scanner,
                 context.AssemblyProvider,
                 context.AssemblyCandidateFinder,
-                context.Environment,
-                context.Configuration,
-                _diagnosticSource,
                 _options.LoggingLevelSwitch,
                 _options.LoggerConfiguration,
+                _diagnosticSource,
                 context.Properties
             );
 

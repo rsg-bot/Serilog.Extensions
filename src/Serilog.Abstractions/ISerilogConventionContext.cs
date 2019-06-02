@@ -11,7 +11,6 @@ namespace Rocket.Surgery.Extensions.Serilog
     {
         IAssemblyProvider AssemblyProvider { get; }
         IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
-        IHostEnvironment Environment { get; }
         IConfiguration Configuration { get; }
         LoggingLevelSwitch Switch { get; }
         LoggerConfiguration LoggerConfiguration { get; }
