@@ -25,19 +25,21 @@ namespace Rocket.Surgery.Extensions.Serilog
             LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
             DiagnosticSource diagnosticSource,
-            IDictionary<object, object> properties) : base(environment, scanner, assemblyProvider, assemblyCandidateFinder, properties)
+            IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
+            Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _diagnosticSource = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
             Logger = new DiagnosticLogger(_diagnosticSource);
             Switch = @switch ?? throw new ArgumentNullException(nameof(@switch));
             LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
         }
-        
+
         public IConfiguration Configuration { get; }
         public ILogger Logger { get; }
         public LoggingLevelSwitch Switch { get; }
         public LoggerConfiguration LoggerConfiguration { get; }
+        public IRocketEnvironment Environment { get; }
 
         public global::Serilog.ILogger Build()
         {
