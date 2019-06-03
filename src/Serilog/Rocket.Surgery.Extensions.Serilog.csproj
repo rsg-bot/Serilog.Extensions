@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Rocket.Surgery.Builders" />
         <PackageReference Include="Rocket.Surgery.Conventions" />
         <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     </ItemGroup>

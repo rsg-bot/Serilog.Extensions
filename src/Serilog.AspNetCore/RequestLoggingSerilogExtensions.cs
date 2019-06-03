@@ -6,11 +6,10 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
 {
     public static class RequestLoggingSerilogExtensions
     {
-        public static T UseRequestLoggingSerilog<T>(
-            this T container)
-            where T : IConventionHostBuilder
+        public static IConventionHostBuilder UseRequestLoggingSerilog(
+            this IConventionHostBuilder container)
         {
-            container.AppendConvention(new RequestLoggingConvention());
+            container.Scanner.AppendConvention(new RequestLoggingConvention());
             return container;
         }
     }

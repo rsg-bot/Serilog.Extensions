@@ -9,16 +9,15 @@ namespace Rocket.Surgery.Extensions.Serilog.Empowered
 {
     public static class EmpoweredSerilogExtensions
     {
-        public static T UseEmpoweredSerilog<T>(
-            this T container,
+        public static IConventionHostBuilder UseEmpoweredSerilog(
+            this IConventionHostBuilder container,
             EmpoweredSerilogOptions options)
-            where T : IConventionHostBuilder
         {
-            container.AppendConvention(new EnvironmentLoggingConvention());
-            container.AppendConvention(new SerilogConsoleLoggingConvention(options.IsAsync));
-            container.AppendConvention(new SerilogDebugLoggingConvention(options.IsAsync));
-            container.AppendConvention(new SerilogEnrichLoggingConvention());
-            container.AppendConvention(new SerilogServiceConvention(container.Scanner, container.DiagnosticSource, options));
+            container.Scanner.AppendConvention(new EnvironmentLoggingConvention());
+            container.Scanner.AppendConvention(new SerilogConsoleLoggingConvention(options.IsAsync));
+            container.Scanner.AppendConvention(new SerilogDebugLoggingConvention(options.IsAsync));
+            container.Scanner.AppendConvention(new SerilogEnrichLoggingConvention());
+            container.Scanner.AppendConvention(new SerilogServiceConvention(container.Scanner, container.DiagnosticSource, options));
             return container;
         }
     }

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Rocket.Surgery.Builders;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
@@ -18,14 +17,14 @@ namespace Rocket.Surgery.Extensions.Serilog
     {
         private readonly DiagnosticSource _diagnosticSource;
         public SerilogBuilder(
+            IRocketEnvironment environment,
+            IConfiguration configuration,
             IConventionScanner scanner,
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
-            IHostEnvironment environment,
-            IConfiguration configuration,
-            DiagnosticSource diagnosticSource,
             LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
+            DiagnosticSource diagnosticSource,
             IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
             Environment = environment ?? throw new ArgumentNullException(nameof(environment));
@@ -36,13 +35,11 @@ namespace Rocket.Surgery.Extensions.Serilog
             LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
         }
 
-        protected override ISerilogBuilder GetBuilder() => this;
-
-        public IHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
         public ILogger Logger { get; }
         public LoggingLevelSwitch Switch { get; }
         public LoggerConfiguration LoggerConfiguration { get; }
+        public IRocketEnvironment Environment { get; }
 
         public global::Serilog.ILogger Build()
         {
