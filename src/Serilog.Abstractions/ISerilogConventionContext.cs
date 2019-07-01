@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
@@ -14,6 +15,7 @@ namespace Rocket.Surgery.Extensions.Serilog
         IConfiguration Configuration { get; }
         LoggingLevelSwitch Switch { get; }
         LoggerConfiguration LoggerConfiguration { get; }
+        ILoggingBuilder LoggingBuilder { get;  }
 
         /// <summary>
         /// The environment that this convention is running

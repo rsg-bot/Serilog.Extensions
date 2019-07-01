@@ -3,7 +3,7 @@
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    /// Interface ILoggingConvention
+    ///  ILoggingConvention
     /// </summary>
     /// TODO Edit XML Comment Template for ILoggingConvention
     public interface ISerilogConvention : IConvention<ISerilogConventionContext> { }

@@ -1,39 +1,39 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions.Scanners;
-using Rocket.Surgery.Extensions.DependencyInjection;
-using Rocket.Surgery.Extensions.Serilog.Empowered;
 using Serilog;
 using Serilog.Events;
 using Serilog.Extensions.Logging;
 using System.Diagnostics;
+using Rocket.Surgery.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
-    public class SerilogServiceConvention : IServiceConvention
+    public class SerilogServiceConvention : ILoggingConvention
     {
         private readonly IConventionScanner _scanner;
         private readonly DiagnosticSource _diagnosticSource;
-        private readonly EmpoweredSerilogOptions _options;
+        private readonly SerilogOptions _options;
 
         public SerilogServiceConvention(
             IConventionScanner scanner,
             DiagnosticSource diagnosticSource,
-            EmpoweredSerilogOptions options)
+            SerilogOptions options)
         {
             this._scanner = scanner;
             this._diagnosticSource = diagnosticSource;
             this._options = options;
         }
 
-        public void Register(IServiceConventionContext context)
+        public void Register(ILoggingConventionContext context)
         {
             var serilogBuilder = new SerilogBuilder(
-                context.Environment,
-                context.Configuration,
                 _scanner,
                 context.AssemblyProvider,
                 context.AssemblyCandidateFinder,
+                context.Environment,
+                context.Configuration,
+                context,
                 _options.LoggingLevelSwitch,
                 _options.LoggerConfiguration,
                 _diagnosticSource,

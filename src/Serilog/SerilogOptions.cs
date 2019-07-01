@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Conventions;
 using Serilog;
 using Serilog.Core;
-using System;
 
-namespace Rocket.Surgery.Extensions.Serilog.Empowered
+namespace Rocket.Surgery.Extensions.Serilog
 {
-    public class EmpoweredSerilogOptions
+    public class SerilogOptions
     {
         public Func<ISerilogConventionContext, bool> IsAsync { get; set; } = context => context.Configuration.GetValue("ApplicationState:IsDefaultCommand", true);
         public LoggingLevelSwitch LoggingLevelSwitch { get; set; } = new LoggingLevelSwitch();
