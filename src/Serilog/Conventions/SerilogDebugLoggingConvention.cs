@@ -12,11 +12,11 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
     ///  SerilogDebugLoggingConvention.
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Logging.ILoggingConvention" />
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Serilog.ISerilogConvention" />
+    /// Implements the <see cref="ILoggingConvention" />
+    /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
-    /// <seealso cref="Rocket.Surgery.Extensions.Logging.ILoggingConvention" />
-    /// <seealso cref="Rocket.Surgery.Extensions.Serilog.ISerilogConvention" />
+    /// <seealso cref="ILoggingConvention" />
+    /// <seealso cref="ISerilogConvention" />
     public class SerilogDebugLoggingConvention : ILoggingConvention, ISerilogConvention
     {
         private readonly RocketSerilogOptions _options;

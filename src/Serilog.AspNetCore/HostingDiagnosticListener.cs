@@ -9,10 +9,10 @@ using System.Threading;
 namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
 {
     /// <summary>
-    /// <see cref="IDiagnosticListener" /> implementation that listens for events specific to AspNetCore hosting layer.
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Serilog.ISerilogDiagnosticListener" />
+    /// <see cref="ISerilogDiagnosticListener" /> implementation that listens for events specific to AspNetCore hosting layer.
+    /// Implements the <see cref="ISerilogDiagnosticListener" />
     /// </summary>
-    /// <seealso cref="Rocket.Surgery.Extensions.Serilog.ISerilogDiagnosticListener" />
+    /// <seealso cref="ISerilogDiagnosticListener" />
     internal class HostingDiagnosticListener : ISerilogDiagnosticListener
     {
         private static readonly AsyncLocal<Queue<IDisposable>> HostingDisposable = new AsyncLocal<Queue<IDisposable>>();
@@ -63,9 +63,25 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
             var currentActivity = Activity.Current;
             var queue = GetOrCreateHostingQueue();
 
-            QueueValue(queue, RequestResponseHeaders.RequestIdHeader, currentActivity.Id);
-            QueueValue(queue, "Parent-Id", currentActivity.ParentId);
-            QueueValue(queue, "Root-Id", currentActivity.RootId);
+            if (!string.IsNullOrEmpty(currentActivity.Id))
+            {
+                QueueValue(queue, RequestResponseHeaders.RequestIdHeader, currentActivity.Id);
+            }
+
+            if (!string.IsNullOrEmpty(currentActivity.ParentId))
+            {
+                QueueValue(queue, "Parent-Id", currentActivity.ParentId);
+            }
+
+            if (!string.IsNullOrEmpty(currentActivity.RootId))
+            {
+                QueueValue(queue, "Root-Id", currentActivity.RootId);
+            }
+
+            if (httpContext.Request.Headers.TryGetValue(RequestResponseHeaders.CorrelationContextHeader, out var value))
+            {
+                QueueValue(queue, RequestResponseHeaders.CorrelationContextHeader, value.ToArray());
+            }
 
             if (httpContext.Request.Headers.TryGetValue(RequestResponseHeaders.StandardRootIdHeader, out var xmsRequestRootId))
             {

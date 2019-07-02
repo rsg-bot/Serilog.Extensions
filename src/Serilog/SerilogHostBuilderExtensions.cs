@@ -1,9 +1,11 @@
 ﻿using Rocket.Surgery.Conventions;
+using Rocket.Surgery.Extensions.Serilog;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog;
 using Serilog.Core;
 
-namespace Rocket.Surgery.Extensions.Serilog
+// ReSharper disable once CheckNamespace
+namespace Rocket.Surgery.Conventions
 {
     /// <summary>
     ///  SerilogHostBuilderExtensions.

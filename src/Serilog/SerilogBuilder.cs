@@ -17,13 +17,13 @@ namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
     ///  SerilogBuilder.
-    /// Implements the <see cref="Rocket.Surgery.Conventions.ConventionBuilder{Rocket.Surgery.Extensions.Serilog.ISerilogBuilder, Rocket.Surgery.Extensions.Serilog.ISerilogConvention, Rocket.Surgery.Extensions.Serilog.SerilogConventionDelegate}" />
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Serilog.ISerilogBuilder" />
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Serilog.ISerilogConventionContext" />
+    /// Implements the <see cref="ConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
+    /// Implements the <see cref="ISerilogBuilder" />
+    /// Implements the <see cref="ISerilogConventionContext" />
     /// </summary>
-    /// <seealso cref="Rocket.Surgery.Conventions.ConventionBuilder{Rocket.Surgery.Extensions.Serilog.ISerilogBuilder, Rocket.Surgery.Extensions.Serilog.ISerilogConvention, Rocket.Surgery.Extensions.Serilog.SerilogConventionDelegate}" />
-    /// <seealso cref="Rocket.Surgery.Extensions.Serilog.ISerilogBuilder" />
-    /// <seealso cref="Rocket.Surgery.Extensions.Serilog.ISerilogConventionContext" />
+    /// <seealso cref="ConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
+    /// <seealso cref="ISerilogBuilder" />
+    /// <seealso cref="ISerilogConventionContext" />
     public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogBuilder, ISerilogConventionContext
     {
         /// <summary>
@@ -77,26 +77,31 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// </summary>
         /// <value>The configuration.</value>
         public IConfiguration Configuration { get; }
+
         /// <summary>
         /// A logger that is configured to work with each convention item
         /// </summary>
         /// <value>The logger.</value>
         public ILogger Logger { get; }
+
         /// <summary>
         /// Gets the switch.
         /// </summary>
         /// <value>The switch.</value>
         public LoggingLevelSwitch Switch { get; }
+
         /// <summary>
         /// Gets the logger configuration.
         /// </summary>
         /// <value>The logger configuration.</value>
         public LoggerConfiguration LoggerConfiguration { get; }
+
         /// <summary>
         /// Gets the logging builder.
         /// </summary>
         /// <value>The logging builder.</value>
         public ILoggingBuilder LoggingBuilder { get; }
+
         /// <summary>
         /// The environment that this convention is running
         /// Based on IHostEnvironment / IHostingEnvironment

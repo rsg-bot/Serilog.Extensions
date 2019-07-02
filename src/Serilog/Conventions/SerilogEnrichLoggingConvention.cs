@@ -10,9 +10,9 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
     ///  SerilogEnrichLoggingConvention.
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Serilog.ISerilogConvention" />
+    /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
-    /// <seealso cref="Rocket.Surgery.Extensions.Serilog.ISerilogConvention" />
+    /// <seealso cref="ISerilogConvention" />
     public class SerilogEnrichLoggingConvention : ISerilogConvention
     {
         /// <summary>

@@ -19,6 +19,7 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// <value>The is asynchronous.</value>
         public Func<ISerilogConventionContext, bool> IsAsync { get; set; } = context =>
             context.Configuration.GetValue("ApplicationState:IsDefaultCommand", true);
+
         /// <summary>
         /// Determines how the loglevel is captured, defaults to the value that can be set into the configuration
         /// IApplicationState:LogLevel

@@ -8,8 +8,8 @@ namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
     /// ILoggingConvention
-    /// Implements the <see cref="Rocket.Surgery.Conventions.IConventionBuilder{Rocket.Surgery.Extensions.Serilog.ISerilogBuilder, Rocket.Surgery.Extensions.Serilog.ISerilogConvention, Rocket.Surgery.Extensions.Serilog.SerilogConventionDelegate}" />
+    /// Implements the <see cref="IConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
     /// </summary>
-    /// <seealso cref="Rocket.Surgery.Conventions.IConventionBuilder{Rocket.Surgery.Extensions.Serilog.ISerilogBuilder, Rocket.Surgery.Extensions.Serilog.ISerilogConvention, Rocket.Surgery.Extensions.Serilog.SerilogConventionDelegate}" />
+    /// <seealso cref="IConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
     public interface ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate> { }
 }

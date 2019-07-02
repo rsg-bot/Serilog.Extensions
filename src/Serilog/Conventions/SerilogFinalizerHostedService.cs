@@ -7,9 +7,9 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
     ///  SerilogFinalizerHostedService.
-    /// Implements the <see cref="Microsoft.Extensions.Hosting.IHostedService" />
+    /// Implements the <see cref="IHostedService" />
     /// </summary>
-    /// <seealso cref="Microsoft.Extensions.Hosting.IHostedService" />
+    /// <seealso cref="IHostedService" />
     class SerilogFinalizerHostedService : IHostedService
     {
 #if NETSTANDARD2_0 || NETCOREAPP2_1

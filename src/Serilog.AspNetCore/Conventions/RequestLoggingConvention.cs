@@ -16,9 +16,9 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions
 {
     /// <summary>
     ///  RequestLoggingConvention.
-    /// Implements the <see cref="Rocket.Surgery.Extensions.Logging.ILoggingConvention" />
+    /// Implements the <see cref="ILoggingConvention" />
     /// </summary>
-    /// <seealso cref="Rocket.Surgery.Extensions.Logging.ILoggingConvention" />
+    /// <seealso cref="ILoggingConvention" />
     public class RequestLoggingConvention : ILoggingConvention
     {
         /// <summary>
@@ -33,11 +33,11 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions
 
         /// <summary>
         ///  DiagnosticListenerObserver.
-        /// Implements the <see cref="System.IObserver{System.Diagnostics.DiagnosticListener}" />
-        /// Implements the <see cref="System.IDisposable" />
+        /// Implements the <see cref="IObserver{DiagnosticListener}" />
+        /// Implements the <see cref="IDisposable" />
         /// </summary>
-        /// <seealso cref="System.IObserver{System.Diagnostics.DiagnosticListener}" />
-        /// <seealso cref="System.IDisposable" />
+        /// <seealso cref="IObserver{DiagnosticListener}" />
+        /// <seealso cref="IDisposable" />
         class DiagnosticListenerObserver : IObserver<DiagnosticListener>, IDisposable
         {
             private readonly List<IDisposable> _subscriptions;
@@ -99,9 +99,9 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions
 
         /// <summary>
         ///  HostedService.
-        /// Implements the <see cref="Microsoft.Extensions.Hosting.IHostedService" />
+        /// Implements the <see cref="IHostedService" />
         /// </summary>
-        /// <seealso cref="Microsoft.Extensions.Hosting.IHostedService" />
+        /// <seealso cref="IHostedService" />
         class HostedService : IHostedService
         {
             private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
