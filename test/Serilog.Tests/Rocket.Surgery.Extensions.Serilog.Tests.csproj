@@ -1,8 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\src\Serilog\Rocket.Surgery.Extensions.Serilog.csproj" />
+        <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection" />
+        <PackageReference Include="Rocket.Surgery.Extensions.Logging" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     </ItemGroup>
 </Project>

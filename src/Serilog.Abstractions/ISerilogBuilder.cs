@@ -7,8 +7,9 @@ using Serilog.Core;
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    /// Interface ILoggingConvention
+    /// ILoggingConvention
+    /// Implements the <see cref="Rocket.Surgery.Conventions.IConventionBuilder{Rocket.Surgery.Extensions.Serilog.ISerilogBuilder, Rocket.Surgery.Extensions.Serilog.ISerilogConvention, Rocket.Surgery.Extensions.Serilog.SerilogConventionDelegate}" />
     /// </summary>
-    /// TODO Edit XML Comment Template for ILoggingConvention
+    /// <seealso cref="Rocket.Surgery.Conventions.IConventionBuilder{Rocket.Surgery.Extensions.Serilog.ISerilogBuilder, Rocket.Surgery.Extensions.Serilog.ISerilogConvention, Rocket.Surgery.Extensions.Serilog.SerilogConventionDelegate}" />
     public interface ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate> { }
 }

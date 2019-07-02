@@ -3,8 +3,9 @@
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    /// Interface ILoggingConvention
+    /// ILoggingConvention
+    /// Implements the <see cref="Rocket.Surgery.Conventions.IConvention{Rocket.Surgery.Extensions.Serilog.ISerilogConventionContext}" />
     /// </summary>
-    /// TODO Edit XML Comment Template for ILoggingConvention
+    /// <seealso cref="Rocket.Surgery.Conventions.IConvention{Rocket.Surgery.Extensions.Serilog.ISerilogConventionContext}" />
     public interface ISerilogConvention : IConvention<ISerilogConventionContext> { }
 }

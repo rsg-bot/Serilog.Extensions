@@ -9,8 +9,10 @@ using System.Threading;
 namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
 {
     /// <summary>
-    /// <see cref="IDiagnosticListener"/> implementation that listens for events specific to AspNetCore hosting layer.
+    /// <see cref="IDiagnosticListener" /> implementation that listens for events specific to AspNetCore hosting layer.
+    /// Implements the <see cref="Rocket.Surgery.Extensions.Serilog.ISerilogDiagnosticListener" />
     /// </summary>
+    /// <seealso cref="Rocket.Surgery.Extensions.Serilog.ISerilogDiagnosticListener" />
     internal class HostingDiagnosticListener : ISerilogDiagnosticListener
     {
         private static readonly AsyncLocal<Queue<IDisposable>> HostingDisposable = new AsyncLocal<Queue<IDisposable>>();
@@ -30,7 +32,11 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
             queue.Enqueue(LogContext.PushProperty(name, value));
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value indicating which listener this instance should be subscribed to
+        /// </summary>
+        /// <value>The name of the listener.</value>
+        /// <inheritdoc />
         public string ListenerName { get; } = "Microsoft.AspNetCore";
 
         /// <summary>
@@ -45,6 +51,7 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
         /// <summary>
         /// Diagnostic event handler method for 'Microsoft.AspNetCore.Hosting.HttpRequestIn.Start' event.
         /// </summary>
+        /// <param name="httpContext">The HTTP context.</param>
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn.Start")]
         public void OnHttpRequestInStart(HttpContext httpContext)
         {

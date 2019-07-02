@@ -1,29 +1,52 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Rocket.Surgery.Extensions.DependencyInjection;
-using Rocket.Surgery.Extensions.Serilog.AspNetCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Rocket.Surgery.Conventions;
+using Rocket.Surgery.Extensions.DependencyInjection;
+using Rocket.Surgery.Extensions.Logging;
+using Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions;
 
-namespace Rocket.Surgery.Extensions.Serilog.Conventions
+[assembly:Convention(typeof(RequestLoggingConvention))]
+
+namespace Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions
 {
-    class RequestLoggingConvention : IServiceConvention
+    /// <summary>
+    ///  RequestLoggingConvention.
+    /// Implements the <see cref="Rocket.Surgery.Extensions.Logging.ILoggingConvention" />
+    /// </summary>
+    /// <seealso cref="Rocket.Surgery.Extensions.Logging.ILoggingConvention" />
+    public class RequestLoggingConvention : ILoggingConvention
     {
-        public void Register(IServiceConventionContext context)
+        /// <summary>
+        /// Registers the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        public void Register(ILoggingConventionContext context)
         {
             context.Services.AddTransient<ISerilogDiagnosticListener, HostingDiagnosticListener>();
-            context.OnBuild.Subscribe(new ServiceProviderObserver());
+            context.Services.AddHostedService<HostedService>();
         }
 
+        /// <summary>
+        ///  DiagnosticListenerObserver.
+        /// Implements the <see cref="System.IObserver{System.Diagnostics.DiagnosticListener}" />
+        /// Implements the <see cref="System.IDisposable" />
+        /// </summary>
+        /// <seealso cref="System.IObserver{System.Diagnostics.DiagnosticListener}" />
+        /// <seealso cref="System.IDisposable" />
         class DiagnosticListenerObserver : IObserver<DiagnosticListener>, IDisposable
         {
             private readonly List<IDisposable> _subscriptions;
             private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="DiagnosticListenerObserver"/> class.
+            /// Initializes a new instance of the <see cref="DiagnosticListenerObserver" /> class.
             /// </summary>
+            /// <param name="diagnosticListeners">The diagnostic listeners.</param>
             public DiagnosticListenerObserver(
                 IEnumerable<ISerilogDiagnosticListener> diagnosticListeners)
             {
@@ -53,6 +76,9 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             {
             }
 
+            /// <summary>
+            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            /// </summary>
             /// <inheritdoc />
             public void Dispose()
             {
@@ -71,23 +97,59 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             }
         }
 
-        class ServiceProviderObserver : IObserver<IServiceProvider>
+        /// <summary>
+        ///  HostedService.
+        /// Implements the <see cref="Microsoft.Extensions.Hosting.IHostedService" />
+        /// </summary>
+        /// <seealso cref="Microsoft.Extensions.Hosting.IHostedService" />
+        class HostedService : IHostedService
         {
-            void IObserver<IServiceProvider>.OnCompleted()
+            private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
+#if NETSTANDARD2_0 || NETCOREAPP2_1
+        private readonly IApplicationLifetime _lifetime;
+#else
+            private readonly IHostApplicationLifetime _lifetime;
+#endif
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="HostedService"/> class.
+            /// </summary>
+            /// <param name="diagnosticListeners">The diagnostic listeners.</param>
+            /// <param name="lifetime">The lifetime.</param>
+            public HostedService(
+                IEnumerable<ISerilogDiagnosticListener> diagnosticListeners,
+#if NETSTANDARD2_0 || NETCOREAPP2_1
+                IApplicationLifetime lifetime
+#else
+                IHostApplicationLifetime lifetime
+#endif
+                )
             {
+                _diagnosticListeners = diagnosticListeners;
+                _lifetime = lifetime;
             }
 
-            void IObserver<IServiceProvider>.OnError(Exception error)
+            /// <summary>
+            /// Triggered when the application host is ready to start the service.
+            /// </summary>
+            /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
+            /// <returns>Task.</returns>
+            public Task StartAsync(CancellationToken cancellationToken)
             {
+                var disposable = DiagnosticListener.AllListeners.Subscribe(new DiagnosticListenerObserver(_diagnosticListeners));
+
+                _lifetime.ApplicationStopped.Register(() => disposable.Dispose());
+                return Task.CompletedTask;
             }
 
-            void IObserver<IServiceProvider>.OnNext(IServiceProvider value)
+            /// <summary>
+            /// Triggered when the application host is performing a graceful shutdown.
+            /// </summary>
+            /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
+            /// <returns>Task.</returns>
+            public Task StopAsync(CancellationToken cancellationToken)
             {
-                var disposable = DiagnosticListener.AllListeners.Subscribe(
-                    new DiagnosticListenerObserver(
-                        value.GetRequiredService<IEnumerable<ISerilogDiagnosticListener>>()));
-
-                value.GetRequiredService<IApplicationLifetime>().ApplicationStopped.Register(() => disposable.Dispose());
+                return Task.CompletedTask;
             }
         }
     }
