@@ -19,13 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", ".build\.build.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{E3DCB78E-EE06-4EA3-88AC-762D8910387C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog", "src\Serilog\Rocket.Surgery.Extensions.Serilog.csproj", "{373D10CD-8CA3-4035-9D34-F89B08263AE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog", "src\Serilog\Rocket.Surgery.Extensions.Serilog.csproj", "{373D10CD-8CA3-4035-9D34-F89B08263AE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog.Abstractions", "src\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj", "{6A7422A4-F22D-4215-840C-CDB372BC3799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog.Abstractions", "src\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj", "{6A7422A4-F22D-4215-840C-CDB372BC3799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog.AspNetCore", "src\Serilog.AspNetCore\Rocket.Surgery.Extensions.Serilog.AspNetCore.csproj", "{40876314-BDAA-4C18-B114-2E39135973CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog.AspNetCore", "src\Serilog.AspNetCore\Rocket.Surgery.Extensions.Serilog.AspNetCore.csproj", "{40876314-BDAA-4C18-B114-2E39135973CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Serilog.Tests", "test\Serilog.Tests\Rocket.Surgery.Extensions.Serilog.Tests.csproj", "{B4ED87A9-3C7B-49C6-96E9-5DFE086CB488}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Serilog.Tests", "test\Serilog.Tests\Rocket.Surgery.Extensions.Serilog.Tests.csproj", "{B4ED87A9-3C7B-49C6-96E9-5DFE086CB488}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

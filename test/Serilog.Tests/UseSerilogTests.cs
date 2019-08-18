@@ -43,7 +43,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
         {
             var properties = new ServiceProviderDictionary();
             AutoFake.Provide<IServiceProviderDictionary>(properties);
-            AutoFake.Provide<IDictionary<object, object>>(properties);
+            AutoFake.Provide<IDictionary<object, object?>>(properties);
             AutoFake.Provide<IServiceProvider>(properties);
             var configuration = new ConfigurationBuilder().Build();
             AutoFake.Provide<IConfiguration>(configuration);
@@ -77,7 +77,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
         {
             var properties = new ServiceProviderDictionary();
             AutoFake.Provide<IServiceProviderDictionary>(properties);
-            AutoFake.Provide<IDictionary<object, object>>(properties);
+            AutoFake.Provide<IDictionary<object, object?>>(properties);
             AutoFake.Provide<IServiceProvider>(properties);
             var configuration = new ConfigurationBuilder().Build();
             AutoFake.Provide<IConfiguration>(configuration);
@@ -111,7 +111,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
         {
             var properties = new ServiceProviderDictionary();
             AutoFake.Provide<IServiceProviderDictionary>(properties);
-            AutoFake.Provide<IDictionary<object, object>>(properties);
+            AutoFake.Provide<IDictionary<object, object?>>(properties);
             AutoFake.Provide<IServiceProvider>(properties);
             var configuration = new ConfigurationBuilder().Build();
             AutoFake.Provide<IConfiguration>(configuration);

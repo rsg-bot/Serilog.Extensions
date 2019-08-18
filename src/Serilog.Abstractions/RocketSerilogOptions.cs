@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -25,6 +25,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// IApplicationState:LogLevel
         /// </summary>
         /// <value>The get log level.</value>
-        public Func<ISerilogConventionContext, LogEventLevel> GetLogLevel { get; set; }
+        public Func<ISerilogConventionContext, LogEventLevel>? GetLogLevel { get; set; }
     }
 }

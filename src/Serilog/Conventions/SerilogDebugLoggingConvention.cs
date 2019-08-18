@@ -1,4 +1,4 @@
-﻿using Serilog;
+using Serilog;
 using Serilog.Configuration;
 using System;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// Initializes a new instance of the <see cref="SerilogDebugLoggingConvention"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public SerilogDebugLoggingConvention(RocketSerilogOptions options = null)
+        public SerilogDebugLoggingConvention(RocketSerilogOptions? options = null)
         {
             _options = options ?? new RocketSerilogOptions();
         }

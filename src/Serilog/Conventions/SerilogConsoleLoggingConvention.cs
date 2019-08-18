@@ -1,4 +1,4 @@
-﻿using Serilog;
+using Serilog;
 using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -29,7 +29,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// Initializes a new instance of the <see cref="SerilogConsoleLoggingConvention"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public SerilogConsoleLoggingConvention(RocketSerilogOptions options = null)
+        public SerilogConsoleLoggingConvention(RocketSerilogOptions? options = null)
         {
             _options = options ?? new RocketSerilogOptions();
         }

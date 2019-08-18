@@ -1,4 +1,4 @@
-﻿using Rocket.Surgery.Conventions;
+using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Extensions.Serilog;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog;
@@ -20,7 +20,7 @@ namespace Rocket.Surgery.Conventions
         /// <returns>IConventionHostBuilder.</returns>
         public static IConventionHostBuilder UseSerilog(
             this IConventionHostBuilder container,
-            RocketSerilogOptions options = null)
+            RocketSerilogOptions? options = null)
         {
             container.ServiceProperties[typeof(RocketSerilogOptions)] = options ?? new RocketSerilogOptions();
             container.Scanner.PrependConvention<SerilogServiceConvention>();

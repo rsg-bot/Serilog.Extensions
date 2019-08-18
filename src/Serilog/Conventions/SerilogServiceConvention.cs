@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions.Scanners;
 using Serilog;
@@ -37,13 +37,13 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public SerilogServiceConvention(
             IConventionScanner scanner,
             ILogger diagnosticSource,
-            RocketSerilogOptions serilogOptions = null,
-            RocketLoggingOptions loggingOptions = null)
+            RocketSerilogOptions? serilogOptions = null,
+            RocketLoggingOptions? loggingOptions = null)
         {
-            this._scanner = scanner;
-            this._diagnosticSource = diagnosticSource;
-            this._serilogOptions = serilogOptions ?? new RocketSerilogOptions();
-            this._loggingOptions = loggingOptions ?? new RocketLoggingOptions();
+            _scanner = scanner;
+            _diagnosticSource = diagnosticSource;
+            _serilogOptions = serilogOptions ?? new RocketSerilogOptions();
+            _loggingOptions = loggingOptions ?? new RocketLoggingOptions();
         }
 
         /// <summary>

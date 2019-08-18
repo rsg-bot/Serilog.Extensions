@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -62,7 +62,7 @@ namespace Rocket.Surgery.Extensions.Serilog
             LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
             ILogger diagnosticSource,
-            IDictionary<object, object> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
+            IDictionary<object, object?> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
             Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
@@ -115,8 +115,12 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// <returns>Serilog.ILogger.</returns>
         public global::Serilog.ILogger Build()
         {
-            new ConventionComposer(Scanner)
-                    .Register(this, typeof(ISerilogConvention), typeof(SerilogConventionDelegate));
+            Composer.Register(
+                Scanner,
+                this,
+                typeof(ISerilogConvention),
+                typeof(SerilogConventionDelegate)
+            );
 
             return LoggerConfiguration.CreateLogger();
         }
