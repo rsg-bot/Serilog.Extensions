@@ -17,13 +17,9 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
     {
         private static readonly AsyncLocal<Queue<IDisposable>> HostingDisposable = new AsyncLocal<Queue<IDisposable>>();
 
-        static Queue<IDisposable> GetOrCreateHostingQueue()
+        private static Queue<IDisposable> GetOrCreateHostingQueue()
         {
-            var enrichers = HostingDisposable.Value;
-            if (enrichers == null)
-            {
-                enrichers = HostingDisposable.Value = new Queue<IDisposable>();
-            }
+            var enrichers = HostingDisposable.Value ?? (HostingDisposable.Value = new Queue<IDisposable>());
             return enrichers;
         }
 

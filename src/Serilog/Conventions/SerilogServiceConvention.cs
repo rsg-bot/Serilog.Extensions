@@ -10,6 +10,7 @@ using Rocket.Surgery.Extensions.Logging;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog.Core;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using Rocket.Surgery.Extensions.DependencyInjection;
 
 [assembly: Convention(typeof(SerilogServiceConvention))]
 
@@ -20,7 +21,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="ILoggingConvention" />
     /// </summary>
     /// <seealso cref="ILoggingConvention" />
-    public class SerilogServiceConvention : ILoggingConvention
+    public class SerilogServiceConvention : ILoggingConvention, IServiceConvention
     {
         private readonly IConventionScanner _scanner;
         private readonly ILogger _diagnosticSource;
@@ -50,10 +51,33 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// Registers the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
+        public void Register(IServiceConventionContext context)
+        {
+            context.Services.AddSingleton<ILoggerFactory>(_ =>
+            {
+                var providerCollection = _.GetRequiredService<LoggerProviderCollection>();
+                var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, providerCollection);
+
+                foreach (var provider in _.GetServices<ILoggerProvider>())
+                {
+                    factory.AddProvider(provider);
+                }
+
+                return factory;
+            });
+        }
+
+        /// <summary>
+        /// Registers the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public void Register(ILoggingConventionContext context)
         {
+            var loggerProviderCollection = context.Get<LoggerProviderCollection>() ?? new LoggerProviderCollection();
+            context.Services.AddSingleton(loggerProviderCollection);
+
             var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
-            var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
+            context.Services.AddSingleton(loggingLevelSwitch);
 
             var serilogBuilder = new SerilogBuilder(
                 _scanner,
@@ -63,7 +87,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 context.Configuration,
                 context,
                 loggingLevelSwitch,
-                loggerConfiguration,
+                context.Get<LoggerConfiguration>() ?? new LoggerConfiguration(),
                 _diagnosticSource,
                 context.Properties
             );
@@ -73,8 +97,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             var logger = serilogBuilder.Build();
             Log.Logger = logger;
 
-            context.Services.AddSingleton<ILoggerProvider>(new SerilogLoggerProvider(logger, true));
-            context.Services.AddSingleton(loggingLevelSwitch);
             context.Services.AddSingleton(logger);
             context.Services.AddHostedService<SerilogFinalizerHostedService>();
         }

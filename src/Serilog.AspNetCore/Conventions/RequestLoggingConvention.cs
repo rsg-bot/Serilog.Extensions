@@ -38,7 +38,7 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions
         /// </summary>
         /// <seealso cref="IObserver{DiagnosticListener}" />
         /// <seealso cref="IDisposable" />
-        class DiagnosticListenerObserver : IObserver<DiagnosticListener>, IDisposable
+        private class DiagnosticListenerObserver : IObserver<DiagnosticListener>, IDisposable
         {
             private readonly List<IDisposable> _subscriptions;
             private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
@@ -102,7 +102,7 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions
         /// Implements the <see cref="IHostedService" />
         /// </summary>
         /// <seealso cref="IHostedService" />
-        class HostedService : IHostedService
+        private class HostedService : IHostedService
         {
             private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
 #if NETSTANDARD2_0 || NETCOREAPP2_1
