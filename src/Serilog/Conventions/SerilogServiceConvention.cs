@@ -65,6 +65,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
 
                 return factory;
             });
+            context.Services.AddHostedService<SerilogFinalizerHostedService>();
         }
 
         /// <summary>
@@ -98,7 +99,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             Log.Logger = logger;
 
             context.Services.AddSingleton(logger);
-            context.Services.AddHostedService<SerilogFinalizerHostedService>();
         }
 
         private static LogEventLevel GetLogEventLevel(LogLevel logLevel)
