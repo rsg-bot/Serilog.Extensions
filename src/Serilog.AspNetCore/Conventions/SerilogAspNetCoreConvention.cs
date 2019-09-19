@@ -12,39 +12,31 @@ using Serilog.Core;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using Rocket.Surgery.Extensions.DependencyInjection;
 
-[assembly: Convention(typeof(SerilogServiceConvention))]
+[assembly: Convention(typeof(SerilogAspNetCoreConvention))]
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
-    ///  SerilogServiceConvention.
+    ///  SerilogAspNetCoreConvention.
     /// Implements the <see cref="ILoggingConvention" />
     /// </summary>
     /// <seealso cref="ILoggingConvention" />
-    public class SerilogServiceConvention : ILoggingConvention, IServiceConvention
+    public class SerilogAspNetCoreConvention : ILoggingConvention, IServiceConvention
     {
         private readonly IConventionScanner _scanner;
         private readonly ILogger _diagnosticSource;
-        private readonly RocketSerilogOptions _serilogOptions;
-        private readonly RocketLoggingOptions _loggingOptions;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SerilogServiceConvention"/> class.
+        /// Initializes a new instance of the <see cref="SerilogAspNetCoreConvention"/> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
-        /// <param name="serilogOptions">The serilog options.</param>
-        /// <param name="loggingOptions">The logging options.</param>
-        public SerilogServiceConvention(
+        public SerilogAspNetCoreConvention(
             IConventionScanner scanner,
-            ILogger diagnosticSource,
-            RocketSerilogOptions? serilogOptions = null,
-            RocketLoggingOptions? loggingOptions = null)
+            ILogger diagnosticSource)
         {
             _scanner = scanner;
             _diagnosticSource = diagnosticSource;
-            _serilogOptions = serilogOptions ?? new RocketSerilogOptions();
-            _loggingOptions = loggingOptions ?? new RocketLoggingOptions();
         }
 
         /// <summary>
@@ -78,7 +70,9 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             context.Services.AddSingleton(loggerProviderCollection);
 
             var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
-            context.Services.AddSingleton(loggingLevelSwitch);
+
+            var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
+            loggerConfiguration.WriteTo.Providers(loggerProviderCollection);
 
             var serilogBuilder = new SerilogBuilder(
                 _scanner,
@@ -88,39 +82,15 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 context.Configuration,
                 context,
                 loggingLevelSwitch,
-                context.Get<LoggerConfiguration>() ?? new LoggerConfiguration(),
+                loggerConfiguration,
                 _diagnosticSource,
                 context.Properties
             );
 
-            loggingLevelSwitch.MinimumLevel = _serilogOptions.GetLogLevel?.Invoke(serilogBuilder)
-                                                              ?? GetLogEventLevel(_loggingOptions.GetLogLevel(context));
             var logger = serilogBuilder.Build();
             Log.Logger = logger;
 
             context.Services.AddSingleton(logger);
-        }
-
-        private static LogEventLevel GetLogEventLevel(LogLevel logLevel)
-        {
-            switch (logLevel)
-            {
-                case LogLevel.Trace:
-                case LogLevel.None:
-                    return LogEventLevel.Verbose;
-                case LogLevel.Debug:
-                    return LogEventLevel.Debug;
-                case LogLevel.Information:
-                    return LogEventLevel.Information;
-                case LogLevel.Warning:
-                    return LogEventLevel.Warning;
-                case LogLevel.Error:
-                    return LogEventLevel.Error;
-                case LogLevel.Critical:
-                    return LogEventLevel.Fatal;
-                default:
-                    return LogEventLevel.Information;
-            }
         }
     }
 }

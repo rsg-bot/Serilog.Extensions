@@ -34,19 +34,22 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview9.19421.4" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Rocket.Surgery.Conventions" Version="7.1.0" />
-    <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="7.1.0" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="7.1.0" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="7.1.0" />
-    <PackageReference Update="Rocket.Surgery.Extensions.Logging" Version="7.1.0" />
-    <PackageReference Update="Rocket.Surgery.Extensions.Logging.Abstractions" Version="7.1.0" />
+    <PackageReference Update="Rocket.Surgery.Conventions" Version="7.2.0-beta.3" />
+    <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="7.2.0-beta.3" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="7.2.0-beta.3" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="7.2.0-beta.3" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Logging" Version="7.2.0-beta.3" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Logging.Abstractions" Version="7.2.0-beta.3" />
+    <PackageReference Update="Rocket.Surgery.Hosting.Abstractions" Version="7.2.0-beta.3" />
     <PackageReference Update="Serilog" Version="2.8.0" />
+    <PackageReference Update="Serilog.AspNetCore" Version="3.0.0" />
     <PackageReference Update="Serilog.Enrichers.Demystify" Version="0.1.0-dev-*" />
     <PackageReference Update="Serilog.Enrichers.Environment" Version="2.1.3" />
     <PackageReference Update="Serilog.Enrichers.Thread" Version="3.1.0" />
     <PackageReference Update="Serilog.Enrichers.Process" Version="2.0.1" />
-    <PackageReference Update="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Update="Serilog.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Update="Serilog.Extensions.Logging" Version="3.0.1" />
+    <PackageReference Update="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Update="Serilog.Sinks.ApplicationInsights" Version="3.0.4" />
     <PackageReference Update="Serilog.Sinks.Async" Version="1.4.0" />
     <PackageReference Update="Serilog.Sinks.Console" Version="3.1.1" />
