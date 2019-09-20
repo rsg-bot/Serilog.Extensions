@@ -34,7 +34,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// <param name="assemblyCandidateFinder">The assembly candidate finder.</param>
         /// <param name="environment">The environment.</param>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="loggingBuilder">The logging builder.</param>
         /// <param name="switch">The switch.</param>
         /// <param name="loggerConfiguration">The logger configuration.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
@@ -58,7 +57,6 @@ namespace Rocket.Surgery.Extensions.Serilog
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IRocketEnvironment environment,
             IConfiguration configuration,
-            ILoggingBuilder loggingBuilder,
             LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
             ILogger diagnosticSource,
@@ -66,7 +64,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         {
             Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            LoggingBuilder = loggingBuilder ?? throw new ArgumentNullException(nameof(loggingBuilder));
             Logger = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
             Switch = @switch ?? throw new ArgumentNullException(nameof(@switch));
             LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
@@ -97,12 +94,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         public LoggerConfiguration LoggerConfiguration { get; }
 
         /// <summary>
-        /// Gets the logging builder.
-        /// </summary>
-        /// <value>The logging builder.</value>
-        public ILoggingBuilder LoggingBuilder { get; }
-
-        /// <summary>
         /// The environment that this convention is running
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
@@ -115,6 +106,15 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// <returns>Serilog.ILogger.</returns>
         public global::Serilog.ILogger Build()
         {
+            return Configure().CreateLogger();
+        }
+
+        /// <summary>
+        /// Builds this instance.
+        /// </summary>
+        /// <returns>Serilog.ILogger.</returns>
+        public LoggerConfiguration Configure()
+        {
             Composer.Register(
                 Scanner,
                 this,
@@ -122,7 +122,7 @@ namespace Rocket.Surgery.Extensions.Serilog
                 typeof(SerilogConventionDelegate)
             );
 
-            return LoggerConfiguration.CreateLogger();
+            return LoggerConfiguration;
         }
     }
 }

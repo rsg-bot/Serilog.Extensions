@@ -57,12 +57,12 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public void Register(ILoggingConventionContext context)
         {
             // We remove logging here by default as we don't "take over" all logging duties by default.
-            var serviceDescriptor = context.Services.FirstOrDefault(x =>
-                x.ImplementationType?.FullName == "Microsoft.Extensions.Logging.Console.ConsoleLoggerProvider");
-            if (serviceDescriptor != null)
-            {
-                context.Services.Remove(serviceDescriptor);
-            }
+            var serviceDescriptors = context.Services.Where(x =>
+                x.ImplementationType?.FullName == "Microsoft.Extensions.Logging.Console.ConsoleLoggerProvider")
+                .ToArray();
+            if (serviceDescriptors.Any())
+                foreach (var serviceDescriptor in serviceDescriptors)
+                    context.Services.Remove(serviceDescriptor);
         }
 
         private void Register(LoggerSinkConfiguration configuration)

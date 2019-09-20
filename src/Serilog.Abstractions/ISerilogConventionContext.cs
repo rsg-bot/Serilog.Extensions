@@ -46,12 +46,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         LoggerConfiguration LoggerConfiguration { get; }
 
         /// <summary>
-        /// Gets the logging builder.
-        /// </summary>
-        /// <value>The logging builder.</value>
-        ILoggingBuilder LoggingBuilder { get;  }
-
-        /// <summary>
         /// The environment that this convention is running
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
