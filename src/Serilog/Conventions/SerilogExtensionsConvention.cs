@@ -25,26 +25,22 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     {
         private readonly IConventionScanner _scanner;
         private readonly ILogger _diagnosticSource;
-        private readonly RocketSerilogOptions _serilogOptions;
-        private readonly RocketLoggingOptions _loggingOptions;
+        private readonly RocketSerilogOptions _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SerilogExtensionsConvention"/> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
-        /// <param name="serilogOptions">The serilog options.</param>
-        /// <param name="loggingOptions">The logging options.</param>
+        /// <param name="options">The options.</param>
         public SerilogExtensionsConvention(
             IConventionScanner scanner,
             ILogger diagnosticSource,
-            RocketSerilogOptions? serilogOptions = null,
-            RocketLoggingOptions? loggingOptions = null)
+            RocketSerilogOptions? options = null)
         {
             _scanner = scanner;
             _diagnosticSource = diagnosticSource;
-            _serilogOptions = serilogOptions ?? new RocketSerilogOptions();
-            _loggingOptions = loggingOptions ?? new RocketLoggingOptions();
+            _options = options ?? new RocketSerilogOptions();
         }
 
         /// <summary>
@@ -55,15 +51,22 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         {
             context.Services.AddSingleton<ILoggerFactory>(_ =>
             {
-                var providerCollection = _.GetRequiredService<LoggerProviderCollection>();
-                var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, providerCollection);
-
-                foreach (var provider in _.GetServices<ILoggerProvider>())
+                if (_options.WriteToProviders)
                 {
-                    factory.AddProvider(provider);
-                }
+                    var providerCollection = _.GetRequiredService<LoggerProviderCollection>();
+                    var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, null);
 
-                return factory;
+                    foreach (var provider in _.GetServices<ILoggerProvider>())
+                    {
+                        factory.AddProvider(provider);
+                    }
+
+                    return factory;
+                }
+                else
+                {
+                    return new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, null);
+                }
             });
             context.Services.AddHostedService<SerilogFinalizerHostedService>();
         }
@@ -74,13 +77,16 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// <param name="context">The context.</param>
         public void Register(ILoggingConventionContext context)
         {
-            var loggerProviderCollection = context.Get<LoggerProviderCollection>() ?? new LoggerProviderCollection();
-            context.Services.AddSingleton(loggerProviderCollection);
+            var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
+
+            if (_options.WriteToProviders)
+            {
+                var loggerProviderCollection = context.Get<LoggerProviderCollection>() ?? new LoggerProviderCollection();
+                context.Services.AddSingleton(loggerProviderCollection);
+                loggerConfiguration.WriteTo.Providers(loggerProviderCollection);
+            }
 
             var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
-
-            var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
-            loggerConfiguration.WriteTo.Providers(loggerProviderCollection);
 
             var serilogBuilder = new SerilogBuilder(
                 _scanner,
@@ -88,7 +94,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 context.AssemblyCandidateFinder,
                 context.Environment,
                 context.Configuration,
-                context,
                 loggingLevelSwitch,
                 loggerConfiguration,
                 _diagnosticSource,
@@ -96,7 +101,10 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             );
 
             var logger = serilogBuilder.Build();
-            Log.Logger = logger;
+            if (!_options.PreserveStaticLogger)
+            {
+                Log.Logger = logger;
+            }
 
             context.Services.AddSingleton(logger);
         }

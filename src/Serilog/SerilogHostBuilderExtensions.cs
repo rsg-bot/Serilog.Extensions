@@ -23,12 +23,13 @@ namespace Rocket.Surgery.Conventions
             RocketSerilogOptions? options = null)
         {
             container.ServiceProperties[typeof(RocketSerilogOptions)] = options ?? new RocketSerilogOptions();
-            container.Scanner.PrependConvention<SerilogServiceConvention>();
+            container.Scanner.PrependConvention<SerilogExtensionsConvention>();
             container.Scanner.PrependConvention<SerilogReadFromConfigurationConvention>();
             container.Scanner.PrependConvention<SerilogEnrichLoggingConvention>();
             container.Scanner.PrependConvention<SerilogConsoleLoggingConvention>();
             container.Scanner.PrependConvention<SerilogDebugLoggingConvention>();
             container.Scanner.PrependConvention<EnvironmentLoggingConvention>();
+            container.Scanner.PrependConvention<LoggingLevelSwitchConvention>();
             return container;
         }
     }

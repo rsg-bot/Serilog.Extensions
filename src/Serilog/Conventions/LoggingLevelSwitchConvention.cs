@@ -21,7 +21,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="ILoggingConvention" />
     /// </summary>
     /// <seealso cref="ILoggingConvention" />
-    public class LoggingLevelSwitchConvention : ILoggingConvention, IServiceConvention
+    public class LoggingLevelSwitchConvention : ILoggingConvention, IServiceConvention, ISerilogConvention
     {
         private readonly RocketSerilogOptions _serilogOptions;
         private readonly RocketLoggingOptions _loggingOptions;
@@ -56,8 +56,19 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         {
             var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
             context.Services.AddSingleton(loggingLevelSwitch);
-            loggingLevelSwitch.MinimumLevel = _serilogOptions.GetLogLevel?.Invoke(serilogBuilder)
-                                            ?? LevelConvert.ToSerilogLevel(_loggingOptions.GetLogLevel(context));
+            loggingLevelSwitch.MinimumLevel = _serilogOptions.GetLogLevel == null ?
+                LevelConvert.ToSerilogLevel(_loggingOptions.GetLogLevel(context)) :
+                loggingLevelSwitch.MinimumLevel;
+        }
+
+        /// <summary>
+        /// Registers the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        public void Register(ISerilogConventionContext context)
+        {
+            var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
+            loggingLevelSwitch.MinimumLevel = _serilogOptions.GetLogLevel?.Invoke(context) ?? loggingLevelSwitch.MinimumLevel;
         }
     }
 }

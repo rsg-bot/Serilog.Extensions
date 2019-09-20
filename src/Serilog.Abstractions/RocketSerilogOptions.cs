@@ -26,5 +26,15 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// </summary>
         /// <value>The get log level.</value>
         public Func<ISerilogConventionContext, LogEventLevel>? GetLogLevel { get; set; }
+
+        /// <summary>
+        /// Base option from the serilog package
+        /// </summary>
+        public bool WriteToProviders { get; set; } = true;
+
+        /// <summary>
+        /// Base option from the serilog package
+        /// </summary>
+        public bool PreserveStaticLogger { get; set; }
     }
 }

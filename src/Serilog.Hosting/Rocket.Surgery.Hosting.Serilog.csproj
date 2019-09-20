@@ -10,6 +10,5 @@
     <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Rocket.Surgery.Hosting.Abstractions" />
     <PackageReference Include="Serilog.Extensions.Hosting" />
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 </Project>

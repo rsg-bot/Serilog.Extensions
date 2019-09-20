@@ -22,69 +22,50 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="ILoggingConvention" />
     /// </summary>
     /// <seealso cref="ILoggingConvention" />
-    public class SerilogHostingConvention : ILoggingConvention, IServiceConvention, IHostingConvention
+    public class SerilogHostingConvention : IHostingConvention
     {
         private readonly IConventionScanner _scanner;
         private readonly ILogger _diagnosticSource;
+        private readonly RocketSerilogOptions _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SerilogHostingConvention"/> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
+        /// <param name="options">The options.</param>
         public SerilogHostingConvention(
             IConventionScanner scanner,
-            ILogger diagnosticSource)
+            ILogger diagnosticSource,
+            RocketSerilogOptions? options = null)
         {
             _scanner = scanner;
             _diagnosticSource = diagnosticSource;
-        }
-
-        /// <summary>
-        /// Registers the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public void Register(IServiceConventionContext context)
-        {
-
-        }
-
-        /// <summary>
-        /// Registers the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public void Register(ILoggingConventionContext context)
-        {
-            var loggerProviderCollection = context.Get<LoggerProviderCollection>() ?? new LoggerProviderCollection();
-            context.Services.AddSingleton(loggerProviderCollection);
-
-            var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
-
-            var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
-            loggerConfiguration.WriteTo.Providers(loggerProviderCollection);
-
-            var serilogBuilder = new SerilogBuilder(
-                _scanner,
-                context.AssemblyProvider,
-                context.AssemblyCandidateFinder,
-                context.Environment,
-                context.Configuration,
-                context,
-                loggingLevelSwitch,
-                loggerConfiguration,
-                _diagnosticSource,
-                context.Properties
-            );
-
-            var logger = serilogBuilder.Build();
-            Log.Logger = logger;
-
-            context.Services.AddSingleton(logger);
+            _options = options ?? new RocketSerilogOptions();
         }
 
         public void Register(IHostingConventionContext context)
         {
-            context.
+            context.Scanner.ExceptConvention(typeof(SerilogExtensionsConvention));
+            context.Builder.UseSerilog((ctx, loggerConfiguration) =>
+            {
+                var loggingLevelSwitch = ((IConventionHostBuilder)context).Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
+
+                new SerilogBuilder(
+                    _scanner,
+                    context.AssemblyProvider,
+                    context.AssemblyCandidateFinder,
+                    new RocketEnvironment(ctx.HostingEnvironment),
+                    ctx.Configuration,
+                    loggingLevelSwitch,
+                    loggerConfiguration,
+                    _diagnosticSource,
+                    context.Properties
+                ).Configure();
+            },
+                preserveStaticLogger: _options.PreserveStaticLogger,
+                writeToProviders: _options.WriteToProviders
+            );
         }
     }
 }
