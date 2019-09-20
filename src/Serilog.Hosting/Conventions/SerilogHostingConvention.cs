@@ -47,6 +47,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public void Register(IHostingConventionContext context)
         {
             context.Scanner.ExceptConvention(typeof(SerilogExtensionsConvention));
+            context.Builder.ConfigureLogging(x => x.ClearProviders());
             context.Builder.UseSerilog((ctx, loggerConfiguration) =>
             {
                 var loggingLevelSwitch = ((IConventionHostBuilder)context).Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
