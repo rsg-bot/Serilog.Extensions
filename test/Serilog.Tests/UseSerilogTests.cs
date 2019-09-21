@@ -64,9 +64,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
 
             var sp = sb.Build();
 
-            services.Should().Contain(x => x.ServiceType == typeof(LoggingLevelSwitch));
-            sp.GetRequiredService<LoggingLevelSwitch>().MinimumLevel.Should()
-                .Be(LogEventLevel.Information);
             sp.GetService<ILoggerFactory>().Should().NotBeNull().And.BeOfType<SerilogLoggerFactory>();
         }
 
@@ -96,9 +93,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
 
             var sp = sb.Build();
 
-            services.Should().Contain(x => x.ServiceType == typeof(LoggingLevelSwitch));
-            sp.GetRequiredService<LoggingLevelSwitch>().MinimumLevel.Should()
-                .Be(LogEventLevel.Error);
             sp.GetService<ILoggerFactory>().Should().NotBeNull().And.BeOfType<SerilogLoggerFactory>();
         }
 

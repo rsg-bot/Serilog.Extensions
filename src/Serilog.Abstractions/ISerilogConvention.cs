@@ -3,7 +3,6 @@
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    /// ILoggingConvention
     /// Implements the <see cref="IConvention{ISerilogConventionContext}" />
     /// </summary>
     /// <seealso cref="IConvention{ISerilogConventionContext}" />

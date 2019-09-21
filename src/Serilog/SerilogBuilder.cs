@@ -34,7 +34,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// <param name="assemblyCandidateFinder">The assembly candidate finder.</param>
         /// <param name="environment">The environment.</param>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="switch">The switch.</param>
         /// <param name="loggerConfiguration">The logger configuration.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <param name="properties">The properties.</param>
@@ -57,7 +56,6 @@ namespace Rocket.Surgery.Extensions.Serilog
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IRocketEnvironment environment,
             IConfiguration configuration,
-            LoggingLevelSwitch @switch,
             LoggerConfiguration loggerConfiguration,
             ILogger diagnosticSource,
             IDictionary<object, object?> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
@@ -65,7 +63,6 @@ namespace Rocket.Surgery.Extensions.Serilog
             Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             Logger = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
-            Switch = @switch ?? throw new ArgumentNullException(nameof(@switch));
             LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
         }
 
@@ -80,12 +77,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// </summary>
         /// <value>The logger.</value>
         public ILogger Logger { get; }
-
-        /// <summary>
-        /// Gets the switch.
-        /// </summary>
-        /// <value>The switch.</value>
-        public LoggingLevelSwitch Switch { get; }
 
         /// <summary>
         /// Gets the logger configuration.

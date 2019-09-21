@@ -34,12 +34,6 @@ namespace Rocket.Surgery.Extensions.Serilog
         IConfiguration Configuration { get; }
 
         /// <summary>
-        /// Gets the switch.
-        /// </summary>
-        /// <value>The switch.</value>
-        LoggingLevelSwitch Switch { get; }
-
-        /// <summary>
         /// Gets the logger configuration.
         /// </summary>
         /// <value>The logger configuration.</value>

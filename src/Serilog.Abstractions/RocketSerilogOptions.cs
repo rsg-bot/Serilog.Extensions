@@ -21,13 +21,6 @@ namespace Rocket.Surgery.Extensions.Serilog
             context.Configuration.GetValue("ApplicationState:IsDefaultCommand", true);
 
         /// <summary>
-        /// Determines how the loglevel is captured, defaults to the value that can be set into the configuration
-        /// IApplicationState:LogLevel
-        /// </summary>
-        /// <value>The get log level.</value>
-        public Func<ISerilogConventionContext, LogEventLevel>? GetLogLevel { get; set; }
-
-        /// <summary>
         /// Base option from the serilog package
         /// </summary>
         public bool WriteToProviders { get; set; } = true;

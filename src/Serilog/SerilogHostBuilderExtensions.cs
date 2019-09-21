@@ -29,7 +29,6 @@ namespace Rocket.Surgery.Conventions
             container.Scanner.PrependConvention<SerilogConsoleLoggingConvention>();
             container.Scanner.PrependConvention<SerilogDebugLoggingConvention>();
             container.Scanner.PrependConvention<EnvironmentLoggingConvention>();
-            container.Scanner.PrependConvention<LoggingLevelSwitchConvention>();
             return container;
         }
     }

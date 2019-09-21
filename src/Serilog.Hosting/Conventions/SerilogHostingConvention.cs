@@ -17,21 +17,11 @@ using Rocket.Surgery.Hosting;
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
-    class LoggingBuilder : Microsoft.Extensions.Logging.ILoggingBuilder
-    {
-        public LoggingBuilder(IServiceCollection services)
-        {
-            Services = services;
-        }
-
-        public IServiceCollection Services { get; }
-    }
-
     /// <summary>
     ///  SerilogHostingConvention.
-    /// Implements the <see cref="ILoggingConvention" />
+    /// Implements the <see cref="IHostingConvention" />
     /// </summary>
-    /// <seealso cref="ILoggingConvention" />
+    /// <seealso cref="IHostingConvention" />
     public class SerilogHostingConvention : IHostingConvention
     {
         private readonly IConventionScanner _scanner;
@@ -54,21 +44,19 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             _options = options ?? new RocketSerilogOptions();
         }
 
+        /// <inheritdoc />
         public void Register(IHostingConventionContext context)
         {
             context.Scanner.ExceptConvention(typeof(SerilogExtensionsConvention));
             context.Builder.ConfigureServices((context, services) => new LoggingBuilder(services).ClearProviders());
             context.Builder.UseSerilog((ctx, loggerConfiguration) =>
             {
-                var loggingLevelSwitch = ((IConventionHostBuilder)context).Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
-
                 new SerilogBuilder(
                     _scanner,
                     context.AssemblyProvider,
                     context.AssemblyCandidateFinder,
                     new RocketEnvironment(ctx.HostingEnvironment),
                     ctx.Configuration,
-                    loggingLevelSwitch,
                     loggerConfiguration,
                     _diagnosticSource,
                     context.Properties
@@ -77,6 +65,16 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 preserveStaticLogger: _options.PreserveStaticLogger,
                 writeToProviders: _options.WriteToProviders
             );
+        }
+
+        class LoggingBuilder : Microsoft.Extensions.Logging.ILoggingBuilder
+        {
+            public LoggingBuilder(IServiceCollection services)
+            {
+                Services = services;
+            }
+
+            public IServiceCollection Services { get; }
         }
     }
 }

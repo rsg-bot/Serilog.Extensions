@@ -7,7 +7,6 @@ using Serilog.Core;
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    /// ILoggingConvention
     /// Implements the <see cref="IConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
     /// </summary>
     /// <seealso cref="IConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />

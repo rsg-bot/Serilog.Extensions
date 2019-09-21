@@ -6,7 +6,6 @@ using Serilog.Events;
 using Serilog.Extensions.Logging;
 using System.Diagnostics;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.Logging;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog.Core;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -18,10 +17,10 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
     ///  SerilogExtensionsConvention.
-    /// Implements the <see cref="ILoggingConvention" />
+    /// Implements the <see cref="IServiceConvention" />
     /// </summary>
-    /// <seealso cref="ILoggingConvention" />
-    public class SerilogExtensionsConvention : ILoggingConvention, IServiceConvention
+    /// <seealso cref="IServiceConvention" />
+    public class SerilogExtensionsConvention : IServiceConvention
     {
         private readonly IConventionScanner _scanner;
         private readonly ILogger _diagnosticSource;
@@ -43,10 +42,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             _options = options ?? new RocketSerilogOptions();
         }
 
-        /// <summary>
-        /// Registers the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
+        /// <inheritdoc />
         public void Register(IServiceConventionContext context)
         {
             context.Services.AddSingleton<ILoggerFactory>(_ =>
@@ -69,14 +65,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 }
             });
             context.Services.AddHostedService<SerilogFinalizerHostedService>();
-        }
 
-        /// <summary>
-        /// Registers the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public void Register(ILoggingConventionContext context)
-        {
             var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
 
             if (_options.WriteToProviders)
@@ -86,15 +75,12 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                 loggerConfiguration.WriteTo.Providers(loggerProviderCollection);
             }
 
-            var loggingLevelSwitch = context.Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
-
             var serilogBuilder = new SerilogBuilder(
                 _scanner,
                 context.AssemblyProvider,
                 context.AssemblyCandidateFinder,
                 context.Environment,
                 context.Configuration,
-                loggingLevelSwitch,
                 loggerConfiguration,
                 _diagnosticSource,
                 context.Properties
