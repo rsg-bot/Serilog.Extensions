@@ -17,6 +17,16 @@ using Rocket.Surgery.Hosting;
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
+    class LoggingBuilder : Microsoft.Extensions.Logging.ILoggingBuilder
+    {
+        public LoggingBuilder(IServiceCollection services)
+        {
+            Services = services;
+        }
+
+        public IServiceCollection Services { get; }
+    }
+
     /// <summary>
     ///  SerilogHostingConvention.
     /// Implements the <see cref="ILoggingConvention" />
@@ -47,7 +57,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public void Register(IHostingConventionContext context)
         {
             context.Scanner.ExceptConvention(typeof(SerilogExtensionsConvention));
-            context.Builder.ConfigureLogging(x => x.ClearProviders());
+            context.Builder.ConfigureServices((context, services) => new LoggingBuilder(services).ClearProviders());
             context.Builder.UseSerilog((ctx, loggerConfiguration) =>
             {
                 var loggingLevelSwitch = ((IConventionHostBuilder)context).Get<LoggingLevelSwitch>() ?? new LoggingLevelSwitch();
