@@ -1,7 +1,9 @@
+using System;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Extensions.Serilog;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog;
+using Serilog.Configuration;
 using Serilog.Core;
 
 // ReSharper disable once CheckNamespace
@@ -30,6 +32,25 @@ namespace Rocket.Surgery.Conventions
             container.Scanner.PrependConvention<SerilogDebugLoggingConvention>();
             container.Scanner.PrependConvention<EnvironmentLoggingConvention>();
             return container;
+        }
+
+        /// <summary>
+        /// Write to the log an async sink when running the default command (or web server / hosted process).
+        /// Write to a sync sink when not running the default command.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="register">The action to register the sink.</param>
+        public static ISerilogConventionContext WriteToAsyncConditionally(this ISerilogConventionContext context, Action<LoggerSinkConfiguration> register)
+        {
+            if (ConfigurationAsyncHelper.IsAsync(context.Configuration))
+            {
+                context.LoggerConfiguration.WriteTo.Async(register);
+            }
+            else
+            {
+                register(context.LoggerConfiguration.WriteTo);
+            }
+            return context;
         }
     }
 }

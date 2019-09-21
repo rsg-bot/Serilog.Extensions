@@ -13,12 +13,14 @@ namespace Rocket.Surgery.Extensions.Serilog
     public class RocketSerilogOptions
     {
         /// <summary>
-        /// Determines how the loglevel is captured, defaults to the value that can be set into the configuration
-        /// ApplicationState:IsDefaultCommand
+        /// The default console message template
         /// </summary>
-        /// <value>The is asynchronous.</value>
-        public Func<ISerilogConventionContext, bool> IsAsync { get; set; } = context =>
-            context.Configuration.GetValue("ApplicationState:IsDefaultCommand", true);
+        public string ConsoleMessageTemplate { get; set; } = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}";
+
+        /// <summary>
+        /// The default debug message template
+        /// </summary>
+        public string DebugMessageTemplate { get; set; } = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}";
 
         /// <summary>
         /// Base option from the serilog package

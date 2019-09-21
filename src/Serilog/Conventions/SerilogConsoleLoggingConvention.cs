@@ -18,7 +18,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
     /// <seealso cref="ISerilogConvention" />
-    public class SerilogConsoleLoggingConvention : ISerilogConvention
+    public sealed class SerilogConsoleLoggingConvention : SerilogConditionallyAsyncLoggingConvention
     {
         private readonly RocketSerilogOptions _options;
 
@@ -31,30 +31,12 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             _options = options ?? new RocketSerilogOptions();
         }
 
-        /// <summary>
-        /// Registers the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public void Register(ISerilogConventionContext context)
-        {
-            if (_options.IsAsync(context))
-            {
-                context.LoggerConfiguration.WriteTo.Async(Register);
-            }
-            else
-            {
-                Register(context.LoggerConfiguration.WriteTo);
-            }
-        }
-
-        private void Register(LoggerSinkConfiguration configuration)
-        {
+        /// <inheritdoc />
+        protected override void Register(LoggerSinkConfiguration configuration) =>
             configuration.Console(
                 restrictedToMinimumLevel: LogEventLevel.Verbose,
-                outputTemplate:
-                "[{Timestamp:HH:mm:ss} {Level:w4} {SourceContext}] {Message}{NewLine}{Exception}",
+                outputTemplate: _options.ConsoleMessageTemplate,
                 theme: AnsiConsoleTheme.Literate
             );
-        }
     }
 }
