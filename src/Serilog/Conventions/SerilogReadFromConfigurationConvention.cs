@@ -31,7 +31,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             if (applicationLogLevel.HasValue)
             {
                 context.AddInMemoryCollection(new Dictionary<string, string>() {
-                    { "Serilog:Default", LevelConvert.ToSerilogLevel(applicationLogLevel.Value).ToString() }
+                    { "Serilog:MinimumLevel:Default", LevelConvert.ToSerilogLevel(applicationLogLevel.Value).ToString() }
                 });
             }
         }
