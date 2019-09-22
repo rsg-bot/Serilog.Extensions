@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Serilog.Tests
 {
-    public class SerilogBuilderTests : AutoTestBase
+    public class SerilogBuilderTests : AutoFakeTest
     {
         public SerilogBuilderTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {

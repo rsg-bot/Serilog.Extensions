@@ -24,7 +24,7 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Rocket.Surgery.Extensions.Serilog.Tests
 {
-    public class UseSerilogTests : AutoTestBase
+    public class UseSerilogTests : AutoFakeTest
     {
         public UseSerilogTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Trace)
         {
