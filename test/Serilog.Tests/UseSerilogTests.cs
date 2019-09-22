@@ -87,7 +87,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
             var sb = AutoFake.Resolve<ServicesBuilder>();
             sb.Services.AddLogging(x => x.AddConsole().AddDebug());
 
-            Func<ILoggingConventionContext, LogLevel> @delegate = x => LogLevel.Error;
+            Func<ILoggingConventionContext, LogLevel?> @delegate = x => LogLevel.Error;
 
             builder.UseLogging(new RocketLoggingOptions() { GetLogLevel = @delegate }).UseSerilog();
 
