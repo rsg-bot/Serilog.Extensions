@@ -20,6 +20,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="IServiceConvention" />
     /// </summary>
     /// <seealso cref="IServiceConvention" />
+    [LiveConvention]
     public class SerilogExtensionsConvention : IServiceConvention
     {
         private readonly IConventionScanner _scanner;
@@ -66,11 +67,11 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             });
             context.Services.AddHostedService<SerilogFinalizerHostedService>();
 
-            var loggerConfiguration = context.Get<LoggerConfiguration>() ?? new LoggerConfiguration();
+            var loggerConfiguration = context.GetOrAdd(() => new LoggerConfiguration());
 
             if (_options.WriteToProviders)
             {
-                var loggerProviderCollection = context.Get<LoggerProviderCollection>() ?? new LoggerProviderCollection();
+                var loggerProviderCollection = context.GetOrAdd(() => new LoggerProviderCollection());
                 context.Services.AddSingleton(loggerProviderCollection);
                 loggerConfiguration.WriteTo.Providers(loggerProviderCollection);
             }
