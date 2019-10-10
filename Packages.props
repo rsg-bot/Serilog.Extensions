@@ -28,7 +28,7 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Rocket.Surgery.Conventions" Version="9.0.3" />
+    <PackageReference Update="Rocket.Surgery.Conventions" Version="9.0.4" />
     <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="9.0.3" />
     <PackageReference Update="Rocket.Surgery.Extensions.Configuration.Abstractions" Version="9.0.3" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.0.3" />
