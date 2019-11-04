@@ -30,7 +30,7 @@
   <ItemGroup>
     <PackageReference Update="Rocket.Surgery.Conventions" Version="9.0.6" />
     <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="9.0.6" />
-    <PackageReference Update="Rocket.Surgery.Extensions.Configuration.Abstractions" Version="9.0.5" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Configuration.Abstractions" Version="9.0.6" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
     <PackageReference Update="Rocket.Surgery.Extensions.Logging.Abstractions" Version="9.0.6" />
