@@ -4,7 +4,7 @@
     <GlobalPackageReference Include="Rocket.Surgery.Build.Metadata" Version="3.3.11" Condition="'$(MSBuildProjectName)'!='.build'" />
     <!-- <GlobalPackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3" /> -->
     <GlobalPackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" />
-    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" />
+    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19554-01" />
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
@@ -34,14 +34,14 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Rocket.Surgery.Conventions" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Extensions.Configuration.Abstractions" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Extensions.Logging.Abstractions" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Extensions.Logging" Version="9.0.5" />
-    <PackageReference Update="Rocket.Surgery.Hosting.Abstractions" Version="9.0.5" />
+    <PackageReference Update="Rocket.Surgery.Conventions" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Configuration.Abstractions" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Logging.Abstractions" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Logging" Version="9.0.6" />
+    <PackageReference Update="Rocket.Surgery.Hosting.Abstractions" Version="9.0.6" />
     <PackageReference Update="Serilog" Version="2.9.0" />
     <PackageReference Update="Serilog.AspNetCore" Version="3.1.0" />
     <PackageReference Update="Serilog.Enrichers.Demystify" Version="0.1.0-dev-*" />
