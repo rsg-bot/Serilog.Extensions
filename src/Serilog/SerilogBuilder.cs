@@ -1,33 +1,29 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
 using Serilog;
-using Serilog.Core;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    ///  SerilogBuilder.
-    /// Implements the <see cref="ConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
+    /// SerilogBuilder.
+    /// Implements the <see cref="ConventionBuilder{TBuilder,TConvention,TDelegate}" />
     /// Implements the <see cref="ISerilogBuilder" />
     /// Implements the <see cref="ISerilogConventionContext" />
     /// </summary>
     /// <seealso cref="ConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
     /// <seealso cref="ISerilogBuilder" />
     /// <seealso cref="ISerilogConventionContext" />
-    public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>, ISerilogBuilder, ISerilogConventionContext
+    public class SerilogBuilder : ConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate>,
+                                  ISerilogBuilder,
+                                  ISerilogConventionContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SerilogBuilder"/> class.
+        /// Initializes a new instance of the <see cref="SerilogBuilder" /> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="assemblyProvider">The assembly provider.</param>
@@ -58,12 +54,35 @@ namespace Rocket.Surgery.Extensions.Serilog
             IConfiguration configuration,
             LoggerConfiguration loggerConfiguration,
             ILogger diagnosticSource,
-            IDictionary<object, object?> properties) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
+            IDictionary<object, object?> properties
+        ) : base(scanner, assemblyProvider, assemblyCandidateFinder, properties)
         {
             Environment = environment ?? throw new ArgumentNullException(nameof(environment));
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             Logger = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
             LoggerConfiguration = loggerConfiguration ?? throw new ArgumentNullException(nameof(loggerConfiguration));
+        }
+
+        /// <summary>
+        /// Builds this instance.
+        /// </summary>
+        /// <returns>Serilog.ILogger.</returns>
+        public global::Serilog.ILogger Build() => Configure().CreateLogger();
+
+        /// <summary>
+        /// Builds this instance.
+        /// </summary>
+        /// <returns>Serilog.ILogger.</returns>
+        public LoggerConfiguration Configure()
+        {
+            Composer.Register(
+                Scanner,
+                this,
+                typeof(ISerilogConvention),
+                typeof(SerilogConventionDelegate)
+            );
+
+            return LoggerConfiguration;
         }
 
         /// <summary>
@@ -90,30 +109,5 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// </summary>
         /// <value>The environment.</value>
         public IRocketEnvironment Environment { get; }
-
-        /// <summary>
-        /// Builds this instance.
-        /// </summary>
-        /// <returns>Serilog.ILogger.</returns>
-        public global::Serilog.ILogger Build()
-        {
-            return Configure().CreateLogger();
-        }
-
-        /// <summary>
-        /// Builds this instance.
-        /// </summary>
-        /// <returns>Serilog.ILogger.</returns>
-        public LoggerConfiguration Configure()
-        {
-            Composer.Register(
-                Scanner,
-                this,
-                typeof(ISerilogConvention),
-                typeof(SerilogConventionDelegate)
-            );
-
-            return LoggerConfiguration;
-        }
     }
 }

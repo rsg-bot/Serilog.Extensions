@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DiagnosticAdapter;
-using Serilog.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DiagnosticAdapter;
+using Rocket.Surgery.Extensions.Serilog;
+using Serilog.Context;
 
-namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
+namespace Rocket.Surgery.AspNetCore.Serilog
 {
     /// <summary>
     /// <see cref="ISerilogDiagnosticListener" /> implementation that listens for events specific to AspNetCore hosting layer.
@@ -19,21 +20,12 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
 
         private static Queue<IDisposable> GetOrCreateHostingQueue()
         {
-            var enrichers = HostingDisposable.Value ?? (HostingDisposable.Value = new Queue<IDisposable>());
+            var enrichers = HostingDisposable.Value ?? ( HostingDisposable.Value = new Queue<IDisposable>() );
             return enrichers;
         }
 
         private static void QueueValue(Queue<IDisposable> queue, string name, object value)
-        {
-            queue.Enqueue(LogContext.PushProperty(name, value));
-        }
-
-        /// <summary>
-        /// Gets a value indicating which listener this instance should be subscribed to
-        /// </summary>
-        /// <value>The name of the listener.</value>
-        /// <inheritdoc />
-        public string ListenerName { get; } = "Microsoft.AspNetCore";
+            => queue.Enqueue(LogContext.PushProperty(name, value));
 
         /// <summary>
         /// Diagnostic event handler method for 'Microsoft.AspNetCore.Hosting.HttpRequestIn' event.
@@ -79,12 +71,18 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
                 QueueValue(queue, RequestResponseHeaders.CorrelationContextHeader, value.ToArray());
             }
 
-            if (httpContext.Request.Headers.TryGetValue(RequestResponseHeaders.StandardRootIdHeader, out var xmsRequestRootId))
+            if (httpContext.Request.Headers.TryGetValue(
+                RequestResponseHeaders.StandardRootIdHeader,
+                out var xmsRequestRootId
+            ))
             {
                 QueueValue(queue, RequestResponseHeaders.StandardRootIdHeader, xmsRequestRootId.ToString());
             }
 
-            if (httpContext.Request.Headers.TryGetValue(RequestResponseHeaders.StandardParentIdHeader, out var xmsRequestParentId))
+            if (httpContext.Request.Headers.TryGetValue(
+                RequestResponseHeaders.StandardParentIdHeader,
+                out var xmsRequestParentId
+            ))
             {
                 QueueValue(queue, RequestResponseHeaders.StandardParentIdHeader, xmsRequestParentId.ToString());
             }
@@ -103,5 +101,12 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
                 item.Dispose();
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating which listener this instance should be subscribed to
+        /// </summary>
+        /// <value>The name of the listener.</value>
+        /// <inheritdoc />
+        public string ListenerName { get; } = "Microsoft.AspNetCore";
     }
 }

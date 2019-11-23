@@ -1,16 +1,18 @@
-﻿using System.Threading;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
-    ///  SerilogFinalizerHostedService.
+    /// SerilogFinalizerHostedService.
     /// Implements the <see cref="IHostedService" />
     /// </summary>
     /// <seealso cref="IHostedService" />
-    class SerilogFinalizerHostedService : IHostedService
+    internal class SerilogFinalizerHostedService : IHostedService
     {
 #if NETSTANDARD2_0 || NETCOREAPP2_1
         private readonly IApplicationLifetime _lifetime;
@@ -18,18 +20,18 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         private readonly IHostApplicationLifetime _lifetime;
 #endif
         /// <summary>
-        /// Initializes a new instance of the <see cref="SerilogFinalizerHostedService"/> class.
+        /// Initializes a new instance of the <see cref="SerilogFinalizerHostedService" /> class.
         /// </summary>
         /// <param name="lifetime">The lifetime.</param>
         public SerilogFinalizerHostedService(
 #if NETSTANDARD2_0 || NETCOREAPP2_1
-            IApplicationLifetime lifetime
+            [NotNull] IApplicationLifetime lifetime
 #else
-            IHostApplicationLifetime lifetime
+            [NotNull] IHostApplicationLifetime lifetime
 #endif
         )
         {
-            _lifetime = lifetime;
+            _lifetime = lifetime ?? throw new ArgumentNullException(nameof(lifetime));
         }
 
         /// <summary>
@@ -48,9 +50,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// </summary>
         /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
         /// <returns>Task.</returns>
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }

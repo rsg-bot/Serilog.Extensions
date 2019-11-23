@@ -1,9 +1,9 @@
-﻿namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
+﻿namespace Rocket.Surgery.AspNetCore.Serilog
 {
     /// <summary>
     /// Header names for requests / responses.
     /// </summary>
-    static class RequestResponseHeaders
+    internal static class RequestResponseHeaders
     {
         /// <summary>
         /// Standard parent Id header.

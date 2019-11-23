@@ -1,24 +1,21 @@
+using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Conventions.Scanners;
-using Serilog;
-using Serilog.Events;
-using Serilog.Extensions.Logging;
-using System.Diagnostics;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.Logging;
+using Rocket.Surgery.Conventions.Scanners;
+using Rocket.Surgery.Extensions.Serilog;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
-using Serilog.Core;
+using Rocket.Surgery.Hosting.Serilog.Conventions;
+using Serilog;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
-using Rocket.Surgery.Extensions.DependencyInjection;
-using Rocket.Surgery.Hosting;
 
 [assembly: Convention(typeof(SerilogHostingConvention))]
 
-namespace Rocket.Surgery.Extensions.Serilog.Conventions
+namespace Rocket.Surgery.Hosting.Serilog.Conventions
 {
     /// <summary>
-    ///  SerilogHostingConvention.
+    /// SerilogHostingConvention.
     /// Implements the <see cref="IHostingConvention" />
     /// </summary>
     /// <seealso cref="IHostingConvention" />
@@ -30,7 +27,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         private readonly RocketSerilogOptions _options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SerilogHostingConvention"/> class.
+        /// Initializes a new instance of the <see cref="SerilogHostingConvention" /> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
@@ -38,7 +35,8 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public SerilogHostingConvention(
             IConventionScanner scanner,
             ILogger diagnosticSource,
-            RocketSerilogOptions? options = null)
+            RocketSerilogOptions? options = null
+        )
         {
             _scanner = scanner;
             _diagnosticSource = diagnosticSource;
@@ -46,34 +44,37 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         }
 
         /// <inheritdoc />
-        public void Register(IHostingConventionContext context)
+        public void Register([NotNull] IHostingConventionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             context.Scanner.ExceptConvention(typeof(SerilogExtensionsConvention));
             context.Builder.ConfigureServices((context, services) => new LoggingBuilder(services).ClearProviders());
-            context.Builder.UseSerilog((ctx, loggerConfiguration) =>
-            {
-                new SerilogBuilder(
-                    _scanner,
-                    context.AssemblyProvider,
-                    context.AssemblyCandidateFinder,
-                    new RocketEnvironment(ctx.HostingEnvironment),
-                    ctx.Configuration,
-                    loggerConfiguration,
-                    _diagnosticSource,
-                    context.Properties
-                ).Configure();
-            },
-                preserveStaticLogger: _options.PreserveStaticLogger,
-                writeToProviders: _options.WriteToProviders
+            context.Builder.UseSerilog(
+                (ctx, loggerConfiguration) =>
+                {
+                    new SerilogBuilder(
+                        _scanner,
+                        context.AssemblyProvider,
+                        context.AssemblyCandidateFinder,
+                        new RocketEnvironment(ctx.HostingEnvironment),
+                        ctx.Configuration,
+                        loggerConfiguration,
+                        _diagnosticSource,
+                        context.Properties
+                    ).Configure();
+                },
+                _options.PreserveStaticLogger,
+                _options.WriteToProviders
             );
         }
 
-        class LoggingBuilder : Microsoft.Extensions.Logging.ILoggingBuilder
+        private class LoggingBuilder : ILoggingBuilder
         {
-            public LoggingBuilder(IServiceCollection services)
-            {
-                Services = services;
-            }
+            public LoggingBuilder(IServiceCollection services) => Services = services;
 
             public IServiceCollection Services { get; }
         }

@@ -1,22 +1,21 @@
+using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Conventions.Scanners;
-using Serilog;
-using Serilog.Events;
-using Serilog.Extensions.Logging;
-using System.Diagnostics;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.Serilog.Conventions;
-using Serilog.Core;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
+using Rocket.Surgery.Conventions.Scanners;
 using Rocket.Surgery.Extensions.DependencyInjection;
+using Rocket.Surgery.Extensions.Serilog.Conventions;
+using Serilog;
+using Serilog.Extensions.Logging;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 [assembly: Convention(typeof(SerilogExtensionsConvention))]
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
-    ///  SerilogExtensionsConvention.
+    /// SerilogExtensionsConvention.
     /// Implements the <see cref="IServiceConvention" />
     /// </summary>
     /// <seealso cref="IServiceConvention" />
@@ -28,7 +27,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         private readonly RocketSerilogOptions _options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SerilogExtensionsConvention"/> class.
+        /// Initializes a new instance of the <see cref="SerilogExtensionsConvention" /> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
@@ -36,7 +35,8 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         public SerilogExtensionsConvention(
             IConventionScanner scanner,
             ILogger diagnosticSource,
-            RocketSerilogOptions? options = null)
+            RocketSerilogOptions? options = null
+        )
         {
             _scanner = scanner;
             _diagnosticSource = diagnosticSource;
@@ -44,27 +44,32 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         }
 
         /// <inheritdoc />
-        public void Register(IServiceConventionContext context)
+        public void Register([NotNull] IServiceConventionContext context)
         {
-            context.Services.AddSingleton<ILoggerFactory>(_ =>
+            if (context == null)
             {
-                if (_options.WriteToProviders)
-                {
-                    var providerCollection = _.GetRequiredService<LoggerProviderCollection>();
-                    var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, null);
+                throw new ArgumentNullException(nameof(context));
+            }
 
-                    foreach (var provider in _.GetServices<ILoggerProvider>())
+            context.Services.AddSingleton<ILoggerFactory>(
+                _ =>
+                {
+                    if (_options.WriteToProviders)
                     {
-                        factory.AddProvider(provider);
+                        var providerCollection = _.GetRequiredService<LoggerProviderCollection>();
+                        var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true);
+
+                        foreach (var provider in _.GetServices<ILoggerProvider>())
+                        {
+                            factory.AddProvider(provider);
+                        }
+
+                        return factory;
                     }
 
-                    return factory;
+                    return new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true);
                 }
-                else
-                {
-                    return new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, null);
-                }
-            });
+            );
             context.Services.AddHostedService<SerilogFinalizerHostedService>();
 
             var loggerConfiguration = context.GetOrAdd(() => new LoggerConfiguration());

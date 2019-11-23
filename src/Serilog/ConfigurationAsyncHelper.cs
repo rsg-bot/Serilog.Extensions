@@ -1,9 +1,19 @@
+using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
     internal static class ConfigurationAsyncHelper
     {
-        public static bool IsAsync(IConfiguration configuration) => configuration.GetValue("ApplicationState:IsDefaultCommand", true);
+        public static bool IsAsync([NotNull] IConfiguration configuration)
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            return configuration.GetValue("ApplicationState:IsDefaultCommand", true);
+        }
     }
 }

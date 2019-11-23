@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text;
 using FakeItEasy;
 using FluentAssertions;
-using Microsoft.Extensions.Options;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Extensions.Testing;
 using Xunit;
@@ -12,10 +10,6 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
 {
     public class SerilogBuilderTests : AutoFakeTest
     {
-        public SerilogBuilderTests(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
         [Fact]
         public void Constructs()
         {
@@ -42,5 +36,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Tests
             var seriLogger = builder.Build();
             seriLogger.Should().NotBeNull();
         }
+
+        public SerilogBuilderTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
     }
 }

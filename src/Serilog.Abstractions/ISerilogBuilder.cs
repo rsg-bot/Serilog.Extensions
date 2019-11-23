@@ -1,14 +1,13 @@
-using Microsoft.Extensions.Configuration;
+using JetBrains.Annotations;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Conventions.Reflection;
-using Serilog;
-using Serilog.Core;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    /// Implements the <see cref="IConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
+    /// Implements the <see cref="IConventionBuilder{TBuilder,TConvention,TDelegate}" />
     /// </summary>
     /// <seealso cref="IConventionBuilder{ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate}" />
-    public interface ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate> { }
+    [PublicAPI]
+    public interface
+        ISerilogBuilder : IConventionBuilder<ISerilogBuilder, ISerilogConvention, SerilogConventionDelegate> { }
 }

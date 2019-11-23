@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
@@ -12,28 +14,44 @@ using Serilog.Extensions.Logging;
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
-    ///  SerilogReadFromConfigurationConvention.
+    /// SerilogReadFromConfigurationConvention.
     /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
     /// <seealso cref="ISerilogConvention" />
     public class SerilogReadFromConfigurationConvention : ISerilogConvention, IConfigurationConvention
     {
         /// <inheritdoc />
-        public void Register(ISerilogConventionContext context)
+        public void Register([NotNull] IConfigurationConventionContext context)
         {
-            context.LoggerConfiguration.ReadFrom.Configuration(context.Configuration);
-        }
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
-        /// <inheritdoc />
-        public void Register(IConfigurationConventionContext context)
-        {
             var applicationLogLevel = context.Configuration.GetValue<LogLevel?>("ApplicationState:LogLevel");
             if (applicationLogLevel.HasValue)
             {
-                context.AddInMemoryCollection(new Dictionary<string, string>() {
-                    { "Serilog:MinimumLevel:Default", LevelConvert.ToSerilogLevel(applicationLogLevel.Value).ToString() }
-                });
+                context.AddInMemoryCollection(
+                    new Dictionary<string, string>
+                    {
+                        {
+                            "Serilog:MinimumLevel:Default",
+                            LevelConvert.ToSerilogLevel(applicationLogLevel.Value).ToString()
+                        }
+                    }
+                );
             }
+        }
+
+        /// <inheritdoc />
+        public void Register([NotNull] ISerilogConventionContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            context.LoggerConfiguration.ReadFrom.Configuration(context.Configuration);
         }
     }
 }

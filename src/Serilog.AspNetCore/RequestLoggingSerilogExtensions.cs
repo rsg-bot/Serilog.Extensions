@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+using System;
+using JetBrains.Annotations;
+using Rocket.Surgery.AspNetCore.Serilog.Conventions;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.Serilog.AspNetCore.Conventions;
-using Rocket.Surgery.Extensions.Serilog.Conventions;
 
-namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
+namespace Rocket.Surgery.AspNetCore.Serilog
 {
     /// <summary>
-    ///  RequestLoggingSerilogExtensions.
+    /// RequestLoggingSerilogExtensions.
     /// </summary>
+    [PublicAPI]
     public static class RequestLoggingSerilogExtensions
     {
         /// <summary>
@@ -16,8 +17,14 @@ namespace Rocket.Surgery.Extensions.Serilog.AspNetCore
         /// <param name="container">The container.</param>
         /// <returns>IConventionHostBuilder.</returns>
         public static IConventionHostBuilder UseSerilogRequestLogging(
-            this IConventionHostBuilder container)
+            [NotNull] this IConventionHostBuilder container
+        )
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
             container.Scanner.PrependConvention<RequestLoggingConvention>();
             return container;
         }

@@ -1,18 +1,17 @@
+using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Serilog;
-using Serilog.Core;
 
 namespace Rocket.Surgery.Extensions.Serilog
 {
     /// <summary>
-    ///  ISerilogConventionContext
+    /// ISerilogConventionContext
     /// Implements the <see cref="IConventionContext" />
     /// </summary>
     /// <seealso cref="IConventionContext" />
+    [PublicAPI]
     public interface ISerilogConventionContext : IConventionContext
     {
         /// <summary>
@@ -47,4 +46,3 @@ namespace Rocket.Surgery.Extensions.Serilog
         IRocketEnvironment Environment { get; }
     }
 }
-

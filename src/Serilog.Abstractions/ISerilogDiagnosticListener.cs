@@ -12,4 +12,3 @@
         string ListenerName { get; }
     }
 }
-

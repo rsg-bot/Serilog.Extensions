@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.Options;
+using System;
+using JetBrains.Annotations;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Extensions.Serilog.Conventions;
 using Serilog;
-using Serilog.Core;
 
 [assembly: Convention(typeof(SerilogEnrichLoggingConvention))]
 
 namespace Rocket.Surgery.Extensions.Serilog.Conventions
 {
     /// <summary>
-    ///  SerilogEnrichLoggingConvention.
+    /// SerilogEnrichLoggingConvention.
     /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
     /// <seealso cref="ISerilogConvention" />
@@ -19,16 +19,21 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// Registers the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        public void Register(ISerilogConventionContext context)
+        public void Register([NotNull] ISerilogConventionContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             context.LoggerConfiguration
-                .Enrich.FromLogContext()
-                .Enrich.WithDemystifiedStackTraces()
-                .Enrich.WithEnvironmentUserName()
-                .Enrich.WithMachineName()
-                .Enrich.WithProcessId()
-                .Enrich.WithProcessName()
-                .Enrich.WithThreadId();
+               .Enrich.FromLogContext()
+               .Enrich.WithDemystifiedStackTraces()
+               .Enrich.WithEnvironmentUserName()
+               .Enrich.WithMachineName()
+               .Enrich.WithProcessId()
+               .Enrich.WithProcessName()
+               .Enrich.WithThreadId();
         }
     }
 }

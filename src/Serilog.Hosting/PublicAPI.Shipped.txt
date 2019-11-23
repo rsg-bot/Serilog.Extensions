@@ -1,0 +1,3 @@
+Rocket.Surgery.Hosting.Serilog.Conventions.SerilogHostingConvention
+Rocket.Surgery.Hosting.Serilog.Conventions.SerilogHostingConvention.Register(Rocket.Surgery.Hosting.IHostingConventionContext context) -> void
+Rocket.Surgery.Hosting.Serilog.Conventions.SerilogHostingConvention.SerilogHostingConvention(Rocket.Surgery.Conventions.Scanners.IConventionScanner scanner, Microsoft.Extensions.Logging.ILogger diagnosticSource, Rocket.Surgery.Extensions.Serilog.RocketSerilogOptions options = null) -> void

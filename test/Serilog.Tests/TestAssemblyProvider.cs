@@ -4,15 +4,12 @@ using Rocket.Surgery.Conventions.Reflection;
 
 namespace Rocket.Surgery.Extensions.Serilog.Tests
 {
-    class TestAssemblyProvider : IAssemblyProvider
+    internal class TestAssemblyProvider : IAssemblyProvider
     {
-        public IEnumerable<Assembly> GetAssemblies()
+        public IEnumerable<Assembly> GetAssemblies() => new[]
         {
-            return new[]
-            {
-                typeof(SerilogBuilder).GetTypeInfo().Assembly,
-                typeof(TestAssemblyProvider).GetTypeInfo().Assembly
-            };
-        }
+            typeof(SerilogBuilder).GetTypeInfo().Assembly,
+            typeof(TestAssemblyProvider).GetTypeInfo().Assembly
+        };
     }
 }
