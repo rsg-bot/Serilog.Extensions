@@ -18,31 +18,31 @@ namespace Rocket.Surgery.Extensions.Serilog
         /// Gets the assembly provider.
         /// </summary>
         /// <value>The assembly provider.</value>
-        IAssemblyProvider AssemblyProvider { get; }
+        [NotNull] IAssemblyProvider AssemblyProvider { get; }
 
         /// <summary>
         /// Gets the assembly candidate finder.
         /// </summary>
         /// <value>The assembly candidate finder.</value>
-        IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
+        [NotNull] IAssemblyCandidateFinder AssemblyCandidateFinder { get; }
 
         /// <summary>
         /// Gets the configuration.
         /// </summary>
         /// <value>The configuration.</value>
-        IConfiguration Configuration { get; }
+        [NotNull] IConfiguration Configuration { get; }
 
         /// <summary>
         /// Gets the logger configuration.
         /// </summary>
         /// <value>The logger configuration.</value>
-        LoggerConfiguration LoggerConfiguration { get; }
+        [NotNull] LoggerConfiguration LoggerConfiguration { get; }
 
         /// <summary>
         /// The environment that this convention is running
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
         /// <value>The environment.</value>
-        IRocketEnvironment Environment { get; }
+        [NotNull] IRocketEnvironment Environment { get; }
     }
 }
