@@ -57,7 +57,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
                     if (_options.WriteToProviders)
                     {
                         var providerCollection = _.GetRequiredService<LoggerProviderCollection>();
-                        var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true);
+                        var factory = new SerilogLoggerFactory(_.GetRequiredService<global::Serilog.ILogger>(), true, providerCollection);
 
                         foreach (var provider in _.GetServices<ILoggerProvider>())
                         {
