@@ -27,11 +27,8 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             }
 
             context.LoggerConfiguration
-               .Enrich.WithEnvironmentUserName()
-               .Enrich.WithMachineName()
-               .Enrich.WithProcessId()
-               .Enrich.WithProcessName()
-               .Enrich.WithThreadId();
+               .Enrich.FromLogContext()
+               .Enrich.WithDemystifiedStackTraces();
         }
     }
 }

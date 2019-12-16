@@ -19,6 +19,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="IServiceConvention" />
     /// </summary>
     /// <seealso cref="IServiceConvention" />
+    [LiveConvention]
     public class SerilogExtensionsConvention : IServiceConvention
     {
         private readonly IConventionScanner _scanner;
