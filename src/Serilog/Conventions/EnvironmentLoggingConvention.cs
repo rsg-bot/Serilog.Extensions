@@ -12,6 +12,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
     /// <seealso cref="ISerilogConvention" />
+    [LiveConvention]
     public class EnvironmentLoggingConvention : ISerilogConvention
     {
         /// <summary>
