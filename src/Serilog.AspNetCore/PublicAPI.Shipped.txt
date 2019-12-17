@@ -1,5 +1,0 @@
-Rocket.Surgery.AspNetCore.Serilog.Conventions.RequestLoggingConvention
-Rocket.Surgery.AspNetCore.Serilog.Conventions.RequestLoggingConvention.Register(Rocket.Surgery.Extensions.Logging.ILoggingConventionContext context) -> void
-Rocket.Surgery.AspNetCore.Serilog.Conventions.RequestLoggingConvention.RequestLoggingConvention() -> void
-Rocket.Surgery.AspNetCore.Serilog.RequestLoggingSerilogExtensions
-static Rocket.Surgery.AspNetCore.Serilog.RequestLoggingSerilogExtensions.UseSerilogRequestLogging(this Rocket.Surgery.Conventions.IConventionHostBuilder container) -> Rocket.Surgery.Conventions.IConventionHostBuilder
