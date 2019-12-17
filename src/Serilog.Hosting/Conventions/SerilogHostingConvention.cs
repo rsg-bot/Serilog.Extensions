@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
@@ -19,7 +20,6 @@ namespace Rocket.Surgery.Hosting.Serilog.Conventions
     /// Implements the <see cref="IHostingConvention" />
     /// </summary>
     /// <seealso cref="IHostingConvention" />
-    [LiveConvention]
     public class SerilogHostingConvention : IHostingConvention
     {
         private readonly IConventionScanner _scanner;
@@ -52,7 +52,16 @@ namespace Rocket.Surgery.Hosting.Serilog.Conventions
             }
 
             context.Scanner.ExceptConvention(typeof(SerilogExtensionsConvention));
-            context.Builder.ConfigureServices((context, services) => new LoggingBuilder(services).ClearProviders());
+            context.Builder.ConfigureServices((context, services) =>
+            {
+                foreach (var item in services
+                    .Where(x => x.ImplementationType?.FullName.StartsWith("Microsoft.Extensions.Logging") == true)
+                    .ToArray()
+                )
+                {
+                    services.Remove(item);
+                }
+            });
             context.Builder.UseSerilog(
                 (ctx, loggerConfiguration) =>
                 {

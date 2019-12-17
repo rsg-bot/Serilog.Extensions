@@ -13,7 +13,8 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// Implements the <see cref="ISerilogConvention" />
     /// </summary>
     /// <seealso cref="ISerilogConvention" />
-    public class SerilogEnrichLoggingConvention : ISerilogConvention
+    [LiveConvention]
+    public class SerilogEnrichEnvironmentLoggingConvention : ISerilogConvention
     {
         /// <summary>
         /// Registers the specified context.
@@ -27,8 +28,11 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
             }
 
             context.LoggerConfiguration
-               .Enrich.FromLogContext()
-               .Enrich.WithDemystifiedStackTraces();
+               .Enrich.WithEnvironmentUserName()
+               .Enrich.WithMachineName()
+               .Enrich.WithProcessId()
+               .Enrich.WithProcessName()
+               .Enrich.WithThreadId();
         }
     }
 }
