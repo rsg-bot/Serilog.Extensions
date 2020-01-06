@@ -14,7 +14,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
     /// <seealso cref="IHostedService" />
     internal class SerilogFinalizerHostedService : IHostedService
     {
-#if NETSTANDARD2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_0
         private readonly IApplicationLifetime _lifetime;
 #else
         private readonly IHostApplicationLifetime _lifetime;
@@ -24,7 +24,7 @@ namespace Rocket.Surgery.Extensions.Serilog.Conventions
         /// </summary>
         /// <param name="lifetime">The lifetime.</param>
         public SerilogFinalizerHostedService(
-#if NETSTANDARD2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_0
             [NotNull] IApplicationLifetime lifetime
 #else
             [NotNull] IHostApplicationLifetime lifetime

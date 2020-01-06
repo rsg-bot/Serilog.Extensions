@@ -105,12 +105,12 @@ namespace Rocket.Surgery.AspNetCore.Serilog.Conventions
         private class HostedService : IHostedService
         {
             private readonly IEnumerable<ISerilogDiagnosticListener> _diagnosticListeners;
-#if NETSTANDARD2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_0
         private readonly IApplicationLifetime _lifetime;
 #else
             private readonly IHostApplicationLifetime _lifetime;
 #endif
-            private  readonly List<IDisposable> _disposables = new List<IDisposable>();
+            private readonly List<IDisposable> _disposables = new List<IDisposable>();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="HostedService" /> class.
@@ -119,7 +119,7 @@ namespace Rocket.Surgery.AspNetCore.Serilog.Conventions
             /// <param name="lifetime">The lifetime.</param>
             public HostedService(
                 IEnumerable<ISerilogDiagnosticListener> diagnosticListeners,
-#if NETSTANDARD2_0 || NETCOREAPP2_1
+#if NETSTANDARD2_0
                 IApplicationLifetime lifetime
 #else
                 IHostApplicationLifetime lifetime
