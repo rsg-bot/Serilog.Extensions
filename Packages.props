@@ -34,7 +34,7 @@
     <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="9.1.1" />
     <PackageReference Update="Rocket.Surgery.Extensions.Configuration.Abstractions" Version="9.1.0" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.1.1" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.1.0" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.1.1" />
     <PackageReference Update="Rocket.Surgery.Extensions.Logging.Abstractions" Version="9.1.0" />
     <PackageReference Update="Rocket.Surgery.Extensions.Logging" Version="9.1.1" />
     <PackageReference Update="Rocket.Surgery.Hosting.Abstractions" Version="9.1.0" />
