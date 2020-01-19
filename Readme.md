@@ -15,11 +15,12 @@
 <!-- history badges -->
 
 <!-- nuget packages -->
-| Package | NuGet | MyGet |
-| ------- | ----- | ----- |
-| Rocket.Surgery.Extensions.Serilog | [![nuget-version-bbdyzyxy+oya-badge]![nuget-downloads-bbdyzyxy+oya-badge]][nuget-bbdyzyxy+oya] | [![myget-version-bbdyzyxy+oya-badge]![myget-downloads-bbdyzyxy+oya-badge]][myget-bbdyzyxy+oya] |
-| Rocket.Surgery.Extensions.Serilog.Abstractions | [![nuget-version-kylq7m4mhptg-badge]![nuget-downloads-kylq7m4mhptg-badge]][nuget-kylq7m4mhptg] | [![myget-version-kylq7m4mhptg-badge]![myget-downloads-kylq7m4mhptg-badge]][myget-kylq7m4mhptg] |
-| Rocket.Surgery.Extensions.Serilog.AspNetCore | [![nuget-version-bbum2gjl3ira-badge]![nuget-downloads-bbum2gjl3ira-badge]][nuget-bbum2gjl3ira] | [![myget-version-bbum2gjl3ira-badge]![myget-downloads-bbum2gjl3ira-badge]][myget-bbum2gjl3ira] |
+| Package | NuGet |
+| ------- | ----- |
+| Rocket.Surgery.Extensions.Serilog | [![nuget-version-bbdyzyxy+oya-badge]![nuget-downloads-bbdyzyxy+oya-badge]][nuget-bbdyzyxy+oya] |
+| Rocket.Surgery.Extensions.Serilog.Abstractions | [![nuget-version-kylq7m4mhptg-badge]![nuget-downloads-kylq7m4mhptg-badge]][nuget-kylq7m4mhptg] |
+| Rocket.Surgery.AspNetCore.Serilog | [![nuget-version-zsgfs0zuzssw-badge]![nuget-downloads-zsgfs0zuzssw-badge]][nuget-zsgfs0zuzssw] |
+| Rocket.Surgery.Hosting.Serilog | [![nuget-version-ch02bb86e+og-badge]![nuget-downloads-ch02bb86e+og-badge]][nuget-ch02bb86e+og] |
 <!-- nuget packages -->
 
 # Whats next?
@@ -43,21 +44,15 @@ TBD
 [nuget-bbdyzyxy+oya]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Serilog/
 [nuget-version-bbdyzyxy+oya-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Serilog.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-bbdyzyxy+oya-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Serilog.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-bbdyzyxy+oya]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Serilog
-[myget-version-bbdyzyxy+oya-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Serilog.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-bbdyzyxy+oya-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Serilog.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
 [nuget-kylq7m4mhptg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Serilog.Abstractions/
 [nuget-version-kylq7m4mhptg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Serilog.Abstractions.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-kylq7m4mhptg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Serilog.Abstractions.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-kylq7m4mhptg]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Serilog.Abstractions
-[myget-version-kylq7m4mhptg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Serilog.Abstractions.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-kylq7m4mhptg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Serilog.Abstractions.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
-[nuget-bbum2gjl3ira]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Serilog.AspNetCore/
-[nuget-version-bbum2gjl3ira-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Serilog.AspNetCore.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-bbum2gjl3ira-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Serilog.AspNetCore.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-bbum2gjl3ira]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Serilog.AspNetCore
-[myget-version-bbum2gjl3ira-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Serilog.AspNetCore.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-bbum2gjl3ira-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Serilog.AspNetCore.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
+[nuget-zsgfs0zuzssw]: https://www.nuget.org/packages/Rocket.Surgery.AspNetCore.Serilog/
+[nuget-version-zsgfs0zuzssw-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.AspNetCore.Serilog.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-zsgfs0zuzssw-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.AspNetCore.Serilog.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-ch02bb86e+og]: https://www.nuget.org/packages/Rocket.Surgery.Hosting.Serilog/
+[nuget-version-ch02bb86e+og-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Hosting.Serilog.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-ch02bb86e+og-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Hosting.Serilog.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 <!-- generated references -->
 
 <!-- nuke-data
@@ -71,6 +66,4 @@ azurepipelines:
 appveyor:
   account: RocketSurgeonsGuild
   build: serilog-extensions
-myget:
-  account: rocket-surgeons-guild
 -->
