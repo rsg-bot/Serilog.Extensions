@@ -3,9 +3,6 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Serilog.Abstractions\Rocket.Surgery.Extensions.Serilog.Abstractions.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Rocket.Surgery.Conventions" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="Ben.Demystifier" />
@@ -19,5 +16,9 @@
     <PackageReference Include="Serilog.Enrichers.Process" />
     <PackageReference Include="Serilog.Enrichers.Demystify" />
     <PackageReference Include="Serilog.Extensions.Logging" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Serilog.Conventions.Abstractions\Rocket.Surgery.Conventions.Serilog.Abstractions.csproj" />
+    <ProjectReference Include="..\Serilog.Extensions\Rocket.Surgery.Extensions.Serilog.Extensions.csproj" />
   </ItemGroup>
 </Project>

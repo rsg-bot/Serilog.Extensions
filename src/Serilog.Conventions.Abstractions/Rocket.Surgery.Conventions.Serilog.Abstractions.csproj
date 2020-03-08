@@ -6,8 +6,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
         <PackageReference Include="Rocket.Surgery.Conventions.Abstractions" />
-        <PackageReference Include="Rocket.Surgery.Extensions.Configuration.Abstractions" />
-        <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="Rocket.Surgery.Conventions.Configuration.Abstractions" />
+        <PackageReference Include="Rocket.Surgery.Conventions.DependencyInjection.Abstractions" />
         <PackageReference Include="Serilog" />
     </ItemGroup>
 </Project>
